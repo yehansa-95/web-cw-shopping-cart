@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,29 +11,46 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import './SignUp.css';
 import { Storefront } from '@material-ui/icons';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUserRequest } from "../../../utilities/authActions";
+import classnames from "classnames";
 
 class SignUp extends Component {
-    state = {
-        name: '',
+ 
+      state = {
+        name: "", 
+        email: "",
+        password: "",
+        cpassword: "",
+        errors: {}
     };
-
+    
     handleSubmit = event => {
         event.preventDefault();
         const user = {
-            name: this.state.name
+            name: this.state.name, 
+            email: this.state.email,
+            password: this.state.password,
+            cpassword: this.state.cpassword
         }
-        axios.post('https://jsonplaceholder.typicode.com/users', { user })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-                //  window.location = "/retrieve" //This line of code will redirect you once the submission is succeed
-            })
-    }
+        this.props.registerUserRequest(user, this.props.history); 
+    };
+
     handleChange = event => {
-        this.setState({ name: event.target.value });
+        this.setState({ [event.target.id]: event.target.value });
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+          this.setState({
+            errors: nextProps.errors
+          });
+        }
+      }    
+
     render() {
+        const { errors } = this.state;
         return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
@@ -46,64 +63,73 @@ class SignUp extends Component {
                     <Typography component="h1" variant="h5">
                         Sign up
         </Typography>
-                    <form className="form" noValidate>
+                    <form className="form" noValidate  onSubmit={this.handleSubmit}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}  >
                                 <TextField
-                                    autoComplete="fname"
-                                    name="firstName"
-                                    variant="outlined"
-                                    required
+                                    autoComplete="name"
+                                    name="name"
+                                    variant="outlined" 
                                     fullWidth
-                                    id="firstName"
+                                    id="name"
                                     label="First Name"
+                                    value={this.state.name}  
+                                    onChange= {this.handleChange}
+                                    className={classnames("", {
+                                        invalid: errors.name
+                                      })}
                                 />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="lname"
-                                />
-                            </Grid>
+                                   <span className="error-text">{errors.name}</span>
+                            </Grid> 
                             <Grid item xs={12}>
                                 <TextField
-                                    variant="outlined"
-                                    required
+                                    variant="outlined" 
                                     fullWidth
                                     id="email"
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
+                                    value={this.state.email} 
+                                    onChange= {this.handleChange} 
+                                    className={classnames("", {
+                                        invalid: errors.email
+                                      })}
                                 />
+                                 <span className="error-text">{errors.email}</span>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    variant="outlined"
-                                    required
+                                    variant="outlined" 
                                     fullWidth
                                     name="password"
                                     label="Password"
                                     type="password"
                                     id="password"
+                                    value={this.state.password}  
                                     autoComplete="current-password"
+                                    onChange= {this.handleChange}
+                                    className={classnames("", {
+                                        invalid: errors.password
+                                      })}
                                 />
+                                 <span className="error-text">{errors.password}</span>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    variant="outlined"
-                                    required
+                                    variant="outlined" 
                                     fullWidth
-                                    name="confirmPassword"
+                                    name="cpassword"
                                     label="Confirm Password"
                                     type="password"
-                                    id="password"
+                                    id="cpassword"
+                                    value={this.state.cpassword}  
                                     autoComplete="current-password"
+                                    onChange= {this.handleChange}
+                                    className={classnames("", {
+                                        invalid: errors.cpassword
+                                      })}
                                 />
+                                 <span className="error-text">{errors.cpassword}</span>
                             </Grid>
                         </Grid>
                         <Button
@@ -127,5 +153,20 @@ class SignUp extends Component {
             </Container>
         );
     }
-}
-export default SignUp;
+} 
+
+SignUp.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+  };
+
+  const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+  });
+
+  export default connect(
+    mapStateToProps,
+    { registerUserRequest }
+  )(withRouter(SignUp));
