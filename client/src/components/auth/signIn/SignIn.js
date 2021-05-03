@@ -12,8 +12,9 @@ import Container from "@material-ui/core/Container";
 import './SignIn.css';
 import { Storefront } from '@material-ui/icons';
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { loginUserRequest } from "../../../utilities/authActions";
+import { connect } from "react-redux"; 
+import { loginUserRequest } from "../../../utilities/authActions"; 
+import { loginUser } from "../../../actions/authActions"; 
 import classnames from "classnames";
 
 class SignIn extends Component {
