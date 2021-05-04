@@ -11,7 +11,7 @@ export const registerUserRequest = (userData, history) => dispatch => {
 
   axios
     .post("/api/users/register", userData)
-    .then(res => history.push("/login"))  
+    .then(res => history.push("/signIn"))  
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -23,6 +23,36 @@ export const registerUserRequest = (userData, history) => dispatch => {
 export const loginUserRequest = user => dispatch => {
   axios
     .post("/api/users/login", user)
+    .then(res => { 
+      const { token } = res.data;
+      localStorage.setItem("jwtToken", token); 
+      setAuthToken(token); 
+      const decoded = jwt_decode(token); 
+      dispatch(saveLocalUser(decoded));
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const registerAdminRequest = (userData, history) => dispatch => {
+  axios
+    .post("/api/admin/register", userData)
+    .then(res => history.push("/signIn-admin"))  
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const loginAdminRequest = user => dispatch => {
+  axios
+    .post("/api/admin/login", user)
     .then(res => { 
       const { token } = res.data;
       localStorage.setItem("jwtToken", token); 
