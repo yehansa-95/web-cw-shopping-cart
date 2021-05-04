@@ -9,16 +9,16 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import './SignIn.css';
+import './AdminSignIn.css';
 import { Storefront } from '@material-ui/icons';
 import PropTypes from "prop-types";
 import { connect } from "react-redux"; 
-import { loginUserRequest } from "../../../actions/authActions";  
+import { loginAdminRequest } from "../../../../actions/authActions";  
 import classnames from "classnames";
 
-class SignIn extends Component {
+class AdminSignIn extends Component {
     state = {
-        email: '',
+        username: '',
         password: ''
         ,
         errors: {}
@@ -39,11 +39,11 @@ class SignIn extends Component {
     handleSubmit = event => {
         event.preventDefault();
         const user = {
-            email: this.state.email,
+            username: this.state.username,
             password: this.state.password
         }
 
-        this.props.loginUserRequest(user);
+        this.props.loginAdminRequest(user);
     }
 
     handleChange = event => {
@@ -62,26 +62,26 @@ class SignIn extends Component {
                         </Avatar>
                     </div>
                     <Typography component="h1" variant="h5">
-                        Sign in - User
+                        Sign in - Admin
           </Typography>
                     <form className="form" noValidate onSubmit={this.handleSubmit}>
                         <TextField
                             variant="outlined"
                             margin="normal"
                             fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            value={this.state.email}
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
+                            value={this.state.username}
                             onChange={this.handleChange}
                             className={classnames("", {
-                                invalid: errors.email || errors.emailnotfound
+                                invalid: errors.username || errors.usernamenotfound
                             })}
                         />
                         <span className="error-text">
-                            {errors.email}
-                            {errors.emailnotfound}
+                            {errors.username}
+                            {errors.usernamenotfound}
                         </span>
                         <TextField
                             variant="outlined"
@@ -111,20 +111,20 @@ class SignIn extends Component {
                         >
                             Sign In
             </Button>
-            <Button component={Link} to="/signIn-admin" 
+            <Button component={Link} to="signIn" 
                             fullWidth
                             variant="contained"
                             color="secondary"
                             className="submit"
                         >
-                            Sign In as Admin
+                            Sign In as User
           </Button>
                         <Grid container
                             spacing={0}
                             direction="column"
                             alignItems="center" style={{ marginTop: '10vh' }} >
                             <Grid item>
-                                <Link color="inherit" to="/signUp" variant="body2">
+                                <Link color="inherit" to="/signUp-admin" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
@@ -136,8 +136,8 @@ class SignIn extends Component {
     }
 }
 
-SignIn.propTypes = {
-    loggedUser: PropTypes.func.isRequired,
+AdminSignIn.propTypes = {
+    loggedAdmin: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -149,5 +149,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { loginUserRequest }
-)(SignIn);
+    { loginAdminRequest }
+)(AdminSignIn);

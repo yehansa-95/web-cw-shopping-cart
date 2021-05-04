@@ -9,18 +9,18 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import './SignUp.css';
+import './AdminSignUp.css';
 import { Storefront } from '@material-ui/icons';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerUserRequest } from "../../../actions/authActions";
+import { registerAdminRequest } from "../../../../actions/authActions";  
 import classnames from "classnames";
 
-class SignUp extends Component {
+class AdminSignUp extends Component {
 
     state = {
         name: "",
-        email: "",
+        username: "",
         password: "",
         cpassword: "",
         errors: {}
@@ -30,11 +30,11 @@ class SignUp extends Component {
         event.preventDefault();
         const user = {
             name: this.state.name,
-            email: this.state.email,
+            username: this.state.username,
             password: this.state.password,
             cpassword: this.state.cpassword
         }
-        this.props.registerUserRequest(user, this.props.history);
+        this.props.registerAdminRequest(user, this.props.history);
     };
 
     handleChange = event => {
@@ -61,7 +61,7 @@ class SignUp extends Component {
                         </Avatar>
                     </div>
                     <Typography component="h1" variant="h5">
-                        Sign up - User
+                        Sign up - Admin
         </Typography>
                     <form className="form" noValidate onSubmit={this.handleSubmit}>
                         <Grid container spacing={2}>
@@ -85,17 +85,17 @@ class SignUp extends Component {
                                 <TextField
                                     variant="outlined"
                                     fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    value={this.state.email}
+                                    id="username"
+                                    label="Username"
+                                    name="username"
+                                    autoComplete="username"
+                                    value={this.state.username}
                                     onChange={this.handleChange}
                                     className={classnames("", {
-                                        invalid: errors.email
+                                        invalid: errors.username
                                     })}
                                 />
-                                <span className="error-text">{errors.email}</span>
+                                <span className="error-text">{errors.username}</span>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -143,7 +143,7 @@ class SignUp extends Component {
           </Button>
                         <Grid container justify="flex-end">
                             <Grid item>
-                                <Link to="signIn" variant="body2">
+                                <Link to="signIn-admin" variant="body2">
                                     Already have an account? Sign in
               </Link>
                             </Grid>
@@ -155,8 +155,8 @@ class SignUp extends Component {
     }
 }
 
-SignUp.propTypes = {
-    registerUser: PropTypes.func.isRequired,
+AdminSignUp.propTypes = {
+    registerAdmin: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -168,5 +168,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { registerUserRequest }
-)(withRouter(SignUp));
+    { registerAdminRequest }
+)(withRouter(AdminSignUp));
