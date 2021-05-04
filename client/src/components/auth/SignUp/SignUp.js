@@ -13,28 +13,28 @@ import './SignUp.css';
 import { Storefront } from '@material-ui/icons';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerUserRequest } from "../../../utilities/authActions";
+import { registerUserRequest } from "../../../actions/authActions";
 import classnames from "classnames";
 
 class SignUp extends Component {
- 
-      state = {
-        name: "", 
+
+    state = {
+        name: "",
         email: "",
         password: "",
         cpassword: "",
         errors: {}
     };
-    
+
     handleSubmit = event => {
         event.preventDefault();
         const user = {
-            name: this.state.name, 
+            name: this.state.name,
             email: this.state.email,
             password: this.state.password,
             cpassword: this.state.cpassword
         }
-        this.props.registerUserRequest(user, this.props.history); 
+        this.props.registerUserRequest(user, this.props.history);
     };
 
     handleChange = event => {
@@ -43,11 +43,11 @@ class SignUp extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
-          this.setState({
-            errors: nextProps.errors
-          });
+            this.setState({
+                errors: nextProps.errors
+            });
         }
-      }    
+    }
 
     render() {
         const { errors } = this.state;
@@ -55,7 +55,7 @@ class SignUp extends Component {
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className="paper">
-                <div className="avatar">
+                    <div className="avatar">
                         <Avatar >
                             <Storefront />
                         </Avatar>
@@ -63,73 +63,73 @@ class SignUp extends Component {
                     <Typography component="h1" variant="h5">
                         Sign up
         </Typography>
-                    <form className="form" noValidate  onSubmit={this.handleSubmit}>
+                    <form className="form" noValidate onSubmit={this.handleSubmit}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}  >
                                 <TextField
                                     autoComplete="name"
                                     name="name"
-                                    variant="outlined" 
+                                    variant="outlined"
                                     fullWidth
                                     id="name"
                                     label="First Name"
-                                    value={this.state.name}  
-                                    onChange= {this.handleChange}
+                                    value={this.state.name}
+                                    onChange={this.handleChange}
                                     className={classnames("", {
                                         invalid: errors.name
-                                      })}
+                                    })}
                                 />
-                                   <span className="error-text">{errors.name}</span>
-                            </Grid> 
+                                <span className="error-text">{errors.name}</span>
+                            </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    variant="outlined" 
+                                    variant="outlined"
                                     fullWidth
                                     id="email"
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
-                                    value={this.state.email} 
-                                    onChange= {this.handleChange} 
+                                    value={this.state.email}
+                                    onChange={this.handleChange}
                                     className={classnames("", {
                                         invalid: errors.email
-                                      })}
+                                    })}
                                 />
-                                 <span className="error-text">{errors.email}</span>
+                                <span className="error-text">{errors.email}</span>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    variant="outlined" 
+                                    variant="outlined"
                                     fullWidth
                                     name="password"
                                     label="Password"
                                     type="password"
                                     id="password"
-                                    value={this.state.password}  
+                                    value={this.state.password}
                                     autoComplete="current-password"
-                                    onChange= {this.handleChange}
+                                    onChange={this.handleChange}
                                     className={classnames("", {
                                         invalid: errors.password
-                                      })}
+                                    })}
                                 />
-                                 <span className="error-text">{errors.password}</span>
+                                <span className="error-text">{errors.password}</span>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    variant="outlined" 
+                                    variant="outlined"
                                     fullWidth
                                     name="cpassword"
                                     label="Confirm Password"
                                     type="password"
                                     id="cpassword"
-                                    value={this.state.cpassword}  
+                                    value={this.state.cpassword}
                                     autoComplete="current-password"
-                                    onChange= {this.handleChange}
+                                    onChange={this.handleChange}
                                     className={classnames("", {
                                         invalid: errors.cpassword
-                                      })}
+                                    })}
                                 />
-                                 <span className="error-text">{errors.cpassword}</span>
+                                <span className="error-text">{errors.cpassword}</span>
                             </Grid>
                         </Grid>
                         <Button
@@ -153,20 +153,20 @@ class SignUp extends Component {
             </Container>
         );
     }
-} 
+}
 
 SignUp.propTypes = {
     registerUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
-  };
+};
 
-  const mapStateToProps = state => ({
+const mapStateToProps = state => ({
     auth: state.auth,
     errors: state.errors
-  });
+});
 
-  export default connect(
+export default connect(
     mapStateToProps,
     { registerUserRequest }
-  )(withRouter(SignUp));
+)(withRouter(SignUp));
