@@ -1,7 +1,7 @@
 import {
   SAVE_LOCAL_USER,
   USER_LOADING
-} from "../utilities/types";
+} from "../actions/types";
 
 var empty = require('is-empty');
 
