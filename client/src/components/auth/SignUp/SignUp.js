@@ -49,6 +49,12 @@ class SignUp extends Component {
         }
     }
 
+    componentDidMount() {
+        if (this.props.auth.isAuthenticated && this.props.auth.user.email != null) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
     render() {
         const { errors } = this.state;
         return (
@@ -72,7 +78,7 @@ class SignUp extends Component {
                                     variant="outlined"
                                     fullWidth
                                     id="name"
-                                    label="First Name"
+                                    placeholder="First Name"
                                     value={this.state.name}
                                     onChange={this.handleChange}
                                     className={classnames("", {
@@ -86,7 +92,7 @@ class SignUp extends Component {
                                     variant="outlined"
                                     fullWidth
                                     id="email"
-                                    label="Email Address"
+                                    placeholder="Email Address"
                                     name="email"
                                     autoComplete="email"
                                     value={this.state.email}
@@ -102,7 +108,7 @@ class SignUp extends Component {
                                     variant="outlined"
                                     fullWidth
                                     name="password"
-                                    label="Password"
+                                    placeholder="Password"
                                     type="password"
                                     id="password"
                                     value={this.state.password}
@@ -119,7 +125,7 @@ class SignUp extends Component {
                                     variant="outlined"
                                     fullWidth
                                     name="cpassword"
-                                    label="Confirm Password"
+                                    placeholder="Confirm Password"
                                     type="password"
                                     id="cpassword"
                                     value={this.state.cpassword}
@@ -156,7 +162,7 @@ class SignUp extends Component {
 }
 
 SignUp.propTypes = {
-    registerUser: PropTypes.func.isRequired,
+    registerUserRequest: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };

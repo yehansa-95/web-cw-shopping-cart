@@ -36,6 +36,12 @@ class AdminSignIn extends Component {
         }
     }
 
+    componentDidMount() { 
+        if (this.props.auth.isAuthenticated && this.props.auth.user.username != null) {
+            this.props.history.push("/dashboard");
+          }
+      }
+
     handleSubmit = event => {
         event.preventDefault();
         const user = {
@@ -70,7 +76,7 @@ class AdminSignIn extends Component {
                             margin="normal"
                             fullWidth
                             id="username"
-                            label="Username"
+                            placeholder="Username"
                             name="username"
                             autoComplete="username"
                             value={this.state.username}
@@ -88,7 +94,7 @@ class AdminSignIn extends Component {
                             margin="normal"
                             fullWidth
                             name="password"
-                            label="Password"
+                            placeholder="Password"
                             type="password"
                             id="password"
                             autoComplete="current-password"
@@ -137,7 +143,7 @@ class AdminSignIn extends Component {
 }
 
 AdminSignIn.propTypes = {
-    loggedAdmin: PropTypes.func.isRequired,
+    loginAdminRequest: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };

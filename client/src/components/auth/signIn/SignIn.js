@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
-import axios from "axios";
+import React, { Component } from 'react'; 
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import TextField from "@material-ui/core/TextField"; 
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import './SignIn.css';
@@ -15,6 +12,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux"; 
 import { loginUserRequest } from "../../../actions/authActions";  
 import classnames from "classnames";
+import Grid from "@material-ui/core/Grid";
 
 class SignIn extends Component {
     state = {
@@ -25,6 +23,7 @@ class SignIn extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
         if (nextProps.auth.isAuthenticated) {
             this.props.history.push("/dashboard"); // push user to dashboard when they login
         }
@@ -35,6 +34,13 @@ class SignIn extends Component {
             });
         }
     }
+
+    componentDidMount() { 
+        
+        if (this.props.auth.isAuthenticated && this.props.auth.user.email != null) {
+          this.props.history.push("/dashboard");
+        }
+      }
 
     handleSubmit = event => {
         event.preventDefault();
@@ -70,7 +76,7 @@ class SignIn extends Component {
                             margin="normal"
                             fullWidth
                             id="email"
-                            label="Email Address"
+                            placeholder="Email"
                             name="email"
                             autoComplete="email"
                             value={this.state.email}
@@ -88,7 +94,7 @@ class SignIn extends Component {
                             margin="normal"
                             fullWidth
                             name="password"
-                            label="Password"
+                            placeholder="Password"
                             type="password"
                             id="password"
                             autoComplete="current-password"
@@ -137,7 +143,7 @@ class SignIn extends Component {
 }
 
 SignIn.propTypes = {
-    loggedUser: PropTypes.func.isRequired,
+    loginUserRequest: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
