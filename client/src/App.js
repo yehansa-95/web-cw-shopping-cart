@@ -12,6 +12,9 @@ import { saveLocalUser, logoutUser } from "./actions/authActions";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/Admin/Dashboard/Dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Items from "./components/Admin/Items/Items";
+import CreateItem from "./components/Admin/Items/CreateItem";
+import 'react-toastify/dist/ReactToastify.css';
 
 if (localStorage.jwtToken) { 
   const token = localStorage.jwtToken;
@@ -36,6 +39,8 @@ const App = () => {
           <Route exact path="/signUp-admin" component={AdminSignUp} />   
           <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/view-items" component={Items} />   
+              <PrivateRoute exact path="/add-item" component={CreateItem} />   
             </Switch>
       </Router> 
       </Provider>

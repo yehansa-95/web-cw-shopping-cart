@@ -8,6 +8,7 @@ const validateAdminLoginInput = require("../../validation/admin-login");
 const validateAddItemInput = require("../../validation/add-item");
 const Admin = require("../../models/Admin");
 const Item = require("../../models/Item");
+const upload = require('../../middleware/upload');
 
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateAdminRegisterInput(req.body);
@@ -87,8 +88,8 @@ router.post("/login", (req, res) => {
 });
 
 
-router.post("/items/add", (req, res) => {
-  const { errors, isValid } = validateAddItemInput(req.body);
+router.route("/items/add").post(upload.single('imageData'),(req, res) => {
+  const { errors, isValid } = validateAddItemInput(req.body,req.file.path);
 
   if (!isValid) {
     return res.status(400).json(errors);
@@ -97,7 +98,7 @@ router.post("/items/add", (req, res) => {
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
-    imageUrl: req.body.imageUrl
+    imageData: req.file.path,
   });
 
   newItem
@@ -116,6 +117,7 @@ router.get('/items/all', (req, res) => {
 });
 
 router.delete('/items/delete', (req, res) => {
+  console.log(req.body)
   Item.deleteOne({ _id: req.body._id}).then(item => {
       if (item) {
           return res.status(200).json({message: 'Item deleted successfully.', success: true})
@@ -123,15 +125,15 @@ router.delete('/items/delete', (req, res) => {
   });
 });
 
-router.put('/items/update', (req, res) => {
-  const { errors, isValid } = validateAddItemInput(req.body);
+router.route('/items/update').put(upload.single('imageData'), (req, res) => {
+  const { errors, isValid } = validateAddItemInput(req.body,req.file.path);
   if (!isValid) {
       return res.status(400).json(errors);
   }
   const _id = req.body._id;
   Item.findOne({ _id }).then(item => {
       if (item) { 
-          let update = {'name': req.body.name, 'description': req.body.description, 'price': req.body.price,'imageUrl': req.body.imageUrl};
+          let update = {'name': req.body.name, 'description': req.body.description, 'price': req.body.price, 'imageData': req.file.path};
           Item.updateOne({ _id: _id}, {$set: update}, function(err, result) {
               if (err) {
                   return res.status(400).json({ message: 'Unable to update Item.' });
