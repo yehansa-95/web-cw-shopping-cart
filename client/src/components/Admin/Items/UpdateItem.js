@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from "../../../actions/axios-config";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter,useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Navbar from "../UIs/Navbar";
@@ -13,7 +13,7 @@ import ImagePlaceholder from '../../../images/ImagePlaceholder.png'
 import './Items.css';
 import "react-quill/dist/quill.snow.css";
 
-class CreateItem extends Component {
+class UpdateItem extends Component {
 
     state = {
         name: "",
@@ -64,7 +64,8 @@ class CreateItem extends Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount() { 
+        console.log(this.props.match.params.id)
     }
 
     render() {
@@ -138,7 +139,7 @@ class CreateItem extends Component {
     }
 }
 
-CreateItem.propTypes = { 
+UpdateItem.propTypes = { 
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -150,5 +151,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps
-)(CreateItem);
+)(UpdateItem);
 

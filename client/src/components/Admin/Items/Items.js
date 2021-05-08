@@ -1,16 +1,15 @@
 import React, { Component, Fragment } from "react";
 import Navbar from "../UIs/Navbar";
 import Sidebar from "../UIs/Sidebar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faList } from "@fortawesome/free-solid-svg-icons/faList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import axios from "../../../actions/axios-config";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-// import UserAddModal from "../partials/UserAddModal";
-// import UserUpdateModal from "../partials/UserUpdateModal";
+import axios from "../../../actions/axios-config";  
+import './Items.css';
 import { toast, ToastContainer } from "react-toastify";
+import { Link } from "react-router-dom";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 class Items extends Component {
 
@@ -49,8 +48,9 @@ class Items extends Component {
             .delete("/api/admin/items/delete", { data: { _id: record._id }}).then(res => {
                 console.log(res)
                 if (res.status === 200) {
-                    toast.success(res.data.message, {
+                    toast.error(res.data.message, {
                         position: toast.POSITION.TOP_CENTER,
+                        autoClose: 1500,
                     })
                 }
             })
@@ -71,15 +71,21 @@ class Items extends Component {
                       <div id="mainContent" className="container" style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)'}}>
                         {this.state.records?.map((value, index) => (
                           <div>
-                             <div className="card"  >
+                             <div className="card">
                                      <img className="card-img-top" src={value.imageData} alt="Card image cap"></img>
                                      <div className="card-body">
                                         <h5 className="card-title">{value.name}</h5>
-                                         <p className="card-text">{value.description}</p>
+                                         <p className="card-text">{value.description}</p> 
                                          <button
-                                className="btn btn-danger btn-sm"
+                                className="btn btn-danger btn-sm  "
                                 onClick={() => this.deleteRecord(value)}><FontAwesomeIcon icon={faTrash}/>
-                            </button>
+                            </button> 
+                            <Link to={`/edit-item/${value._id}`}>
+                            <button
+                                className="btn btn-secondary btn-sm" style={{ marginLeft: '10px' }}  
+                               ><FontAwesomeIcon icon={faEdit}/>
+                            </button> 
+                            </Link>
                                  </div>
                                 </div>
                           </div>

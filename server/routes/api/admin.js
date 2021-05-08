@@ -89,7 +89,8 @@ router.post("/login", (req, res) => {
 
 
 router.route("/items/add").post(upload.single('imageData'),(req, res) => {
-  const { errors, isValid } = validateAddItemInput(req.body,req.file.path);
+ // console.log(req.body)
+  const { errors, isValid } = validateAddItemInput(req.body,req.file);
 
   if (!isValid) {
     return res.status(400).json(errors);
@@ -143,6 +144,26 @@ router.route('/items/update').put(upload.single('imageData'), (req, res) => {
           });
       } else {
           return res.status(400).json({ message: 'Item Not available.' });
+      }
+  });
+});
+
+router.get("/items/getById", (req, res) => {
+  console.log(req.query)
+  Item.findOne({ _id: req.query.id }).then(item => { 
+    if (item) {
+      return res.status(200).send(item);
+    }else{
+      return res.status(400).json({ message: 'Item Not available.' });
+    }
+  });
+});
+
+
+router.get("/items/all", (req, res) => {
+  Item.find({}).then(items => {
+      if (items) {
+          return res.status(200).send(items);
       }
   });
 });

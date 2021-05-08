@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Items from "./components/Admin/Items/Items";
 import CreateItem from "./components/Admin/Items/CreateItem";
 import 'react-toastify/dist/ReactToastify.css';
+import UpdateItem from "./components/Admin/Items/UpdateItem";
 
 if (localStorage.jwtToken) { 
   const token = localStorage.jwtToken;
@@ -41,6 +42,7 @@ const App = () => {
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/view-items" component={Items} />   
               <PrivateRoute exact path="/add-item" component={CreateItem} />   
+              <PrivateRoute exact path="/edit-item/:id" component={UpdateItem} />   
             </Switch>
       </Router> 
       </Provider>

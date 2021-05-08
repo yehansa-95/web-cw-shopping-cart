@@ -6,8 +6,7 @@ module.exports = function validateAddItemInput(data,file) {
     console.log(data,file)
     data.name = !isEmpty(data.name) ? data.name : "";
     data.description = !isEmpty(data.description) ? data.description : "";
-    data.price = !isEmpty(data.price) ? data.price : "";
-    file = !isEmpty(file) ? file : "";
+    data.price = !isEmpty(data.price) ? data.price : ""; 
 
     if (Validator.isEmpty(data.name)) {
         errors.name = "Item Name field is required";
@@ -23,8 +22,8 @@ module.exports = function validateAddItemInput(data,file) {
         errors.price = "Price is invalid";
     }
 
-    if (Validator.isEmpty(file)) {
-        errors.imageData = "Image Url field is required";
+    if (Validator.isEmpty(file?.path ?? "")) {
+        errors.imageData = "Image is required";
     } 
     
     return {
