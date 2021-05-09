@@ -1,0 +1,11 @@
+.image-preview{
+    margin-top : 15;
+    width : 300px;
+    height: 300px;
+    border-style: dotted;
+}
+
+.btn-cards {
+    align-items: flex-end;
+ text-align: right;
+}

@@ -6,6 +6,8 @@ const keys = require("../../config/keys");
 const validateAdminRegisterInput = require("../../validation/admin-register");
 const validateAdminLoginInput = require("../../validation/admin-login");
 const validateAddItemInput = require("../../validation/add-item");
+
+const validateUpdateItemInput = require("../../validation/edit-item");
 const Admin = require("../../models/Admin");
 const Item = require("../../models/Item");
 const upload = require('../../middleware/upload');
@@ -89,7 +91,8 @@ router.post("/login", (req, res) => {
 
 
 router.route("/items/add").post(upload.single('imageData'),(req, res) => {
-  const { errors, isValid } = validateAddItemInput(req.body,req.file.path);
+ // console.log(req.body)
+  const { errors, isValid } = validateAddItemInput(req.body,req.file);
 
   if (!isValid) {
     return res.status(400).json(errors);
@@ -126,14 +129,21 @@ router.delete('/items/delete', (req, res) => {
 });
 
 router.route('/items/update').put(upload.single('imageData'), (req, res) => {
-  const { errors, isValid } = validateAddItemInput(req.body,req.file.path);
+  console.log(req.body.id)
+  const { errors, isValid } = validateUpdateItemInput(req.body);
   if (!isValid) {
+    console.log(errors)
       return res.status(400).json(errors);
   }
-  const _id = req.body._id;
+  const _id = req.body.id;
   Item.findOne({ _id }).then(item => {
       if (item) { 
-          let update = {'name': req.body.name, 'description': req.body.description, 'price': req.body.price, 'imageData': req.file.path};
+        var update = {}
+        if (req.body.imageData == 'undefined'){
+          update = {'name': req.body.name, 'description': req.body.description, 'price': req.body.price};
+        }else{
+          update = {'name': req.body.name, 'description': req.body.description, 'price': req.body.price, 'imageData': req.file.path};
+        }
           Item.updateOne({ _id: _id}, {$set: update}, function(err, result) {
               if (err) {
                   return res.status(400).json({ message: 'Unable to update Item.' });
@@ -143,6 +153,26 @@ router.route('/items/update').put(upload.single('imageData'), (req, res) => {
           });
       } else {
           return res.status(400).json({ message: 'Item Not available.' });
+      }
+  });
+});
+
+router.get("/items/getById", (req, res) => {
+  console.log(req.query)
+  Item.findOne({ _id: req.query.id }).then(item => { 
+    if (item) {
+      return res.status(200).send(item);
+    }else{
+      return res.status(400).json({ message: 'Item Not available.' });
+    }
+  });
+});
+
+
+router.get("/items/all", (req, res) => {
+  Item.find({}).then(items => {
+      if (items) {
+          return res.status(200).send(items);
       }
   });
 });
