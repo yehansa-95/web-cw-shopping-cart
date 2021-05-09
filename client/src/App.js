@@ -40,7 +40,7 @@ const App = () => {
           <Route exact path="/signIn-admin" component={AdminSignIn} />  
           <Route exact path="/signUp-admin" component={AdminSignUp} />   
           <Switch>
-              <PrivateRoute exact path="/dashboard" component={Items} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/view-items" component={Items} />   
               <PrivateRoute exact path="/add-item" component={CreateItem} />   
               <PrivateRoute exact path="/edit-item/:id" component={UpdateItem} />   

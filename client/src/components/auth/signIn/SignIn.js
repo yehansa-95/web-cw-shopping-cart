@@ -25,7 +25,7 @@ class SignIn extends Component {
     componentWillReceiveProps(nextProps) {
         console.log(nextProps)
         if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/dashboard"); // push user to dashboard when they login
+            this.props.history.push("/dashboard"); 
         }
 
         if (nextProps.errors) {
@@ -35,10 +35,13 @@ class SignIn extends Component {
         }
     }
 
-    componentDidMount() { 
-        
-        if (this.props.auth.isAuthenticated && this.props.auth.user.email != null) {
-          this.props.history.push("/dashboard");
+    componentDidMount() {
+        if (this.props.auth.isAuthenticated) { 
+            if (this.props.auth.user.email != null){
+                this.props.history.push("/dashboard");
+            }else{
+                this.props.history.push("/view-items");
+            }
         }
       }
 
