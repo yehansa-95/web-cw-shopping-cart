@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import axios from "../../../actions/axios-config";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Navbar from "../UIs/Navbar";
 import Sidebar from "../UIs/Sidebar";
 import ReactQuill from "react-quill";
-import { toast, ToastContainer } from "react-toastify";
 import classnames from "classnames";
 import { createItemRequest } from "../../../actions/itemActions";
 import ImagePlaceholder from '../../../images/ImagePlaceholder.png'
+import { toast, ToastContainer } from "react-toastify";
 import './Items.css';
 import "react-quill/dist/quill.snow.css";
 
-class CreateItem extends Component {
+class UpdateItem extends Component {
 
     state = {
         name: "",
@@ -25,24 +25,46 @@ class CreateItem extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        let item = {};                                                 
-        item = new FormData();                                     
-        item.append("imageData", event.target.elements.image.files[0]);    
-        item.append("name", this.state.name);                       
-        item.append("description", this.state.description);            
-        item.append("price", this.state.price);                         
-        this.createItem(item);           
+        let item = {};
+        item = new FormData();
+        item.append("imageData", event.target.elements.image.files[0]);
+        item.append("name", this.state.name);
+        item.append("description", this.state.description);
+        item.append("price", this.state.price);
+        item.append("id", this.props.match.params.id);
+        this.updateItem(item);
     };
 
-    createItem(item) { 
+    updateItem(item) {
+        console.log(item)
         axios
-    .post("/api/admin/items/add", item)
-        .then(res => this.props.history.push("/view-items"))  
-        .catch(err =>{
-            this.setState({
-                errors: err.response.data
+            .put("/api/admin/items/update", item)
+            .then(res => toast.success(res.data.message, {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1500,
+            }))
+            .catch(err => {
+                this.setState({
+                    errors: err.response.data
+                })
             })
-        })
+    }
+
+    getData() {
+        const params = new URLSearchParams([['id', this.props.match.params.id]]);
+        axios
+            .get("/api/admin/items/getById", { params })
+            .then(res => {
+                console.log(res)
+                let resData = res.data
+                this.setState({
+                    name: resData.name,
+                    description: resData.description,
+                    price: resData.price,
+                    imageData: `${res.config.baseURL}/${resData.imageData}`
+                })
+            })
+            .catch()
     }
 
     handleChange = event => {
@@ -65,6 +87,7 @@ class CreateItem extends Component {
     }
 
     componentDidMount() {
+        this.getData()
     }
 
     render() {
@@ -75,7 +98,7 @@ class CreateItem extends Component {
                 <div className="d-flex" id="wrapper">
                     <Sidebar />
                     <div className="container mt-2">
-                        <h1 className="mt-2 text-success">Add Item</h1>
+                        <h1 className="mt-2 text-success">Update Item</h1>
                         <form onSubmit={this.handleSubmit}>
                             <div className="form-group mt-2">
                                 <label className="mt-2 " for="image">Item Image</label>
@@ -97,8 +120,8 @@ class CreateItem extends Component {
                             </div>
                             <div className="form-group mt-2">
                                 <label for="name">Item Name</label>
-                                <input type="text" 
-                                id="name"
+                                <input type="text"
+                                    id="name"
                                     value={this.state.name}
                                     onChange={this.handleChange}
                                     className={classnames("form-control", {
@@ -131,6 +154,7 @@ class CreateItem extends Component {
                             </div>
                             <button type="submit" className="btn btn-success mt-2">Submit</button>
                         </form>
+                        <ToastContainer />
                     </div>
                 </div>
             </div>
@@ -138,7 +162,7 @@ class CreateItem extends Component {
     }
 }
 
-CreateItem.propTypes = { 
+UpdateItem.propTypes = {
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -150,5 +174,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps
-)(CreateItem);
+)(UpdateItem);
 

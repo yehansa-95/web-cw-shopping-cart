@@ -18,8 +18,7 @@ class Sidebar extends Component {
         return (
             <div className="border-right h-100 col-sm-2 col-md-2 sidebar p-1"  id="sidebar-wrapper">
                 <div className="list-group list-group-flush">
-                    <h5><Link to="/dashboard" className="list-group-item list-group-item-dark">Dashboard</Link></h5>
-                    <h5><Link to="/view-items" className="list-group-item list-group-item-dark">View Items</Link></h5>
+                    <h5><Link to="/dashboard" className="list-group-item list-group-item-dark">Dashboard</Link></h5> 
                     <h5> <Link to="/add-item" className="list-group-item list-group-item-dark">Add Item</Link></h5>
                     <h5><button className="list-group-item list-group-item-danger" onClick={this.onLogoutClick}>Logout <FontAwesomeIcon icon={faSignOutAlt} /></button></h5>
                 </div>

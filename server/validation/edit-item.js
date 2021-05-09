@@ -1,9 +1,8 @@
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 
-module.exports = function validateAddItemInput(data,file) {
-    let errors = {};
-    console.log(data,file)
+module.exports = function validateUpdateItemInput(data) {
+    let errors = {}; 
     data.name = !isEmpty(data.name) ? data.name : "";
     data.description = !isEmpty(data.description) ? data.description : "";
     data.price = !isEmpty(data.price) ? data.price : ""; 
@@ -20,10 +19,6 @@ module.exports = function validateAddItemInput(data,file) {
         errors.price = "Price field is required";
     } else if (!Validator.isInt(data.price)) {
         errors.price = "Price is invalid";
-    }
-
-    if (Validator.isEmpty(file?.path ?? "")) {
-        errors.imageData = "Image is required";
     } 
     
     return {
