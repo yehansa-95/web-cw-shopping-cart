@@ -76,7 +76,7 @@ class Items extends Component {
                                     <div className="card-body">
                                         <h5 className="card-title">{value.name}</h5>
                                         <p className="card-text">{value.description}</p>
-                                        <div class="btn-group" role="group"> 
+                                        <div className="btn-group" role="group"> 
                                         <button
                                             className="btn btn-danger btn-sm  "
                                             onClick={() => this.deleteRecord(value)}><FontAwesomeIcon icon={faTrash} />
