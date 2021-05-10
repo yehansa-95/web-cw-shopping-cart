@@ -34,7 +34,7 @@ router.post("/register", (req, res) => {
           newAdmin.password = hash;
           newAdmin
             .save()
-            .then(admin => res.json(admin))
+            .then(admin => res.status(200).json(admin))
             .catch(err => console.log(err));
         });
       });
@@ -74,7 +74,7 @@ router.post("/login", (req, res) => {
             expiresIn: 31556926
           },
           (err, token) => {
-            res.json({
+            res.status(200).json({
               success: true,
               token: "Bearer " + token
             });
@@ -106,7 +106,7 @@ router.route("/items/add").post(upload.single('imageData'),(req, res) => {
 
   newItem
     .save()
-    .then(item => res.json(item))
+    .then(item => res.status(200).json(item))
     .catch(err => console.log(err));
 
 });
