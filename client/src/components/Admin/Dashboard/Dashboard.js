@@ -8,6 +8,7 @@ import {Link} from "react-router-dom";
 import {faUserAlt} from "@fortawesome/free-solid-svg-icons/faUserAlt";
 import Navbar from "../UIs/Navbar";
 import Sidebar from "../UIs/Sidebar";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 class Dashboard extends Component {
 
@@ -17,16 +18,16 @@ class Dashboard extends Component {
     };
 
     render() { 
+        const { user } = this.props.auth;
         return (
-            <div>
-                <Navbar/>
-                <div className="d-flex" id="wrapper">
-                    <Sidebar/>
+            <div> 
+                <div className="d-flex" id="wrapper"> 
                     <div id="page-content-wrapper">
-                        <div className="container-fluid">
-                            <button className="btn btn-link mt-2" id="menu-toggle"><FontAwesomeIcon icon={faList}/></button>
-                            <h1 className="mt-2 text-primary">Dashboard</h1>
-                         
+                        <div className="container-fluid"> 
+                            <h1 className="mt-2 text-primary">User Logged</h1> 
+                            <li className="nav-item active">
+                            <a className="nav-link " href="#" onClick={this.onLogoutClick}>Logout ({user.name}) <FontAwesomeIcon icon={faSignOutAlt} /> </a>
+                        </li>
                             </div>
                         </div>
                     </div>

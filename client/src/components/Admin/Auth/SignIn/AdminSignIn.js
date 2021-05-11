@@ -26,7 +26,7 @@ class AdminSignIn extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/dashboard"); // push user to dashboard when they login
+            this.props.history.push("/view-items"); // push user to dashboard when they login
         }
 
         if (nextProps.errors) {
@@ -37,9 +37,13 @@ class AdminSignIn extends Component {
     }
 
     componentDidMount() { 
-        if (this.props.auth.isAuthenticated && this.props.auth.user.username != null) {
-            this.props.history.push("/dashboard");
-          }
+        if (this.props.auth.isAuthenticated) { 
+            if (this.props.auth.user.email != null){
+                this.props.history.push("/dashboard");
+            }else{
+                this.props.history.push("/view-items");
+            }
+        }
       }
 
     handleSubmit = event => {
