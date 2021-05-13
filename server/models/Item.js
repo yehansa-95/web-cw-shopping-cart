@@ -21,6 +21,9 @@ const ItemSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  qty: {
+    type: Number
   }
 });
 module.exports = Item = mongoose.model("items", ItemSchema);

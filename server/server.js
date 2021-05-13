@@ -5,11 +5,13 @@ require("./db/mongoose");
 const passport = require("passport");
 const users = require("./routes/api/users");
 const admin = require("./routes/api/admin");
+const item = require("./routes/api/item");
 require("./config/passport")(passport);
 const path = require("path");
 const swaggerUi = require('swagger-ui-express')
 const swaggerFile = require('./swagger_output.json')
-const app = express(); 
+const app = express();
+
 
 app.use(
   bodyParser.urlencoded({
@@ -32,6 +34,7 @@ app.use(passport.initialize());
 app.use('/uploads', express.static('uploads'));
 app.use("/api/users", users);
 app.use("/api/admin", admin);
+app.use("/api/item", item)
 
 const port = process.env.PORT || 5000;  
 

@@ -10,13 +10,18 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utilities/setAuthToken";
 import { saveLocalUser, logoutUser } from "./actions/authActions";
 import PrivateRoute from "./components/private-route/PrivateRoute";
-import Dashboard from "./components/Admin/Dashboard/Dashboard";
+// import Dashboard from "./components/Admin/Dashboard/Dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Items from "./components/Admin/Items/Items";
 import CreateItem from "./components/Admin/Items/CreateItem";
 import 'react-toastify/dist/ReactToastify.css';
 import UpdateItem from "./components/Admin/Items/UpdateItem";
 import ViewItem from "./components/Admin/Items/ViewItem";
+
+//import shop component
+import Dashboard from "./components/shop/item/items";
+import Cart from "./components/shop/item/cart"
+import  ShowItem  from "./components/shop/item/showItem"
 
 if (localStorage.jwtToken) { 
   const token = localStorage.jwtToken;
@@ -41,6 +46,9 @@ const App = () => {
           <Route exact path="/signUp-admin" component={AdminSignUp} />   
           <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/cart" component={Cart} />
+              <PrivateRoute exact path="/showItems" component={ShowItem} />
+              <PrivateRoute exact path="/showItem/:id" component={ShowItem} />
               <PrivateRoute exact path="/view-items" component={Items} />   
               <PrivateRoute exact path="/add-item" component={CreateItem} />   
               <PrivateRoute exact path="/edit-item/:id" component={UpdateItem} />   
