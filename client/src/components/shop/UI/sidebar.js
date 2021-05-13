@@ -61,7 +61,7 @@ class Sidebar extends Component {
                             <ListItemText primary="Items" />
                         </ListItem>
                     </Link>
-                    <Link to="" style={{ textDecoration: 'none', color: 'black' }}>
+                    <Link to="/cart" style={{ textDecoration: 'none', color: 'black' }}>
                         <ListItem button key="Items">
                             <ListItemIcon><Storefront /> </ListItemIcon>
                             <ListItemText primary="Cart" />

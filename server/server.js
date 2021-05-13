@@ -6,6 +6,7 @@ const passport = require("passport");
 const users = require("./routes/api/users");
 const admin = require("./routes/api/admin");
 const item = require("./routes/api/item");
+const order = require('./routes/api/oder')
 require("./config/passport")(passport);
 const path = require("path");
 const swaggerUi = require('swagger-ui-express')
@@ -34,7 +35,8 @@ app.use(passport.initialize());
 app.use('/uploads', express.static('uploads'));
 app.use("/api/users", users);
 app.use("/api/admin", admin);
-app.use("/api/items", item)
+app.use("/api/items", item);
+app.use("/api/order", order);
 
 const port = process.env.PORT || 5000;  
 

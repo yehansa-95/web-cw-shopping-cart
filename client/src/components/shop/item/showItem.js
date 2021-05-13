@@ -20,10 +20,10 @@ class ShowItem extends Component {
         errors: {}
     };
 
-    getData() {
+    async getData(id) {
         const params = new URLSearchParams([['id', this.props.match.params.id]]);
         axios
-            .get("/api/admin/items/getById", { params })
+            .get(`/api/items/${id}`, { params })
             .then(res => {
                 console.log(res)
                 let resData = res.data
@@ -38,7 +38,8 @@ class ShowItem extends Component {
     } 
 
     componentDidMount() {
-        this.getData()
+        this.getData(this.props.match.params.id)
+        console.log(this.props)
     }
 
     render() {
@@ -86,15 +87,17 @@ class ShowItem extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
 ShowItem.propTypes = {
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-    auth: state.auth,
-    errors: state.errors
-});
+
 
 export default connect(
     mapStateToProps

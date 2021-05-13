@@ -62,7 +62,7 @@ class Items extends Component {
                                         <h5 className="card-title">{value.name}</h5>
                                         <p className="card-text">{value.description}</p>
                                         <div className="btn-group" role="group"> 
-                                        <Link to={`/showItem/${value._id}`}>
+                                        <Link to={`/showItem/${value._id}`} params={{ id:value.id}}>
                                             <button
                                                 className="btn btn-primary btn-sm" style={{ marginLeft: '15px' }}
                                             ><FontAwesomeIcon icon={faEye} />
@@ -73,6 +73,9 @@ class Items extends Component {
                                             // onClick={ }
                                             ><FontAwesomeIcon icon={faShoppingCart} />{" "}Add to Cart
                                             </button>
+                                            <label for="exampleInputPassword1">Password</label>
+
+                            
                                         </div>
                                     </div>
                                 </div> 
