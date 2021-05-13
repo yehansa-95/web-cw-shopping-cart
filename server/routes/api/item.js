@@ -5,7 +5,7 @@ const Item = require("../../models/Item");
 router.get("/",async (req,res) => { 
     try{
         let item = await Item.find();
-        return res.send(item);
+        return res.status(200).send(item);
     }catch(ex){
         console.error(ex);
         return res.status(500).send("Server Error");
@@ -40,7 +40,7 @@ router.put("/:id",async (req, res) =>{
     item.set ({qty: req.body.qty});
  
     item = await item.save();
-    return res.send(item);
+    return res.status(200).send(item);
     } catch(ex) {
         console.error(ex);
         return res.status(500).send("Server Error");
