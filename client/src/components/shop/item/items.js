@@ -32,7 +32,7 @@ class Items extends Component {
 
     getData() {
         axios
-            .get("/api/item/")
+            .get("/api/items/")
             .then(res => {
                 console.log(res)
                 this.setState({ records: res.data })

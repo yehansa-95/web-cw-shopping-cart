@@ -14,10 +14,75 @@
   "consumes": [],
   "produces": [],
   "paths": {
-    "/register": {
+    "/api/users/register": {
       "post": {
         "tags": [],
         "description": "",
+        "produces": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "name": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "produces": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/admin/register": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "produces": [],
         "parameters": [
           {
             "name": "obj",
@@ -48,10 +113,11 @@
         }
       }
     },
-    "/login": {
+    "/api/admin/login": {
       "post": {
         "tags": [],
         "description": "",
+        "produces": [],
         "parameters": [
           {
             "name": "obj",
@@ -82,10 +148,11 @@
         }
       }
     },
-    "/items/add": {
+    "/api/admin/items/add": {
       "post": {
         "tags": [],
         "description": "",
+        "produces": [],
         "parameters": [
           {
             "name": "obj",
@@ -116,10 +183,11 @@
         }
       }
     },
-    "/items/all": {
+    "/api/admin/items/all": {
       "get": {
         "tags": [],
         "description": "",
+        "produces": [],
         "parameters": [],
         "responses": {
           "200": {
@@ -128,10 +196,11 @@
         }
       }
     },
-    "/items/delete": {
+    "/api/admin/items/delete": {
       "delete": {
         "tags": [],
         "description": "",
+        "produces": [],
         "parameters": [
           {
             "name": "obj",
@@ -153,10 +222,11 @@
         }
       }
     },
-    "/items/update": {
+    "/api/admin/items/update": {
       "put": {
         "tags": [],
         "description": "",
+        "produces": [],
         "parameters": [
           {
             "name": "obj",
@@ -193,10 +263,11 @@
         }
       }
     },
-    "/items/getById": {
+    "/api/admin/items/getById": {
       "get": {
         "tags": [],
         "description": "",
+        "produces": [],
         "parameters": [
           {
             "name": "id",
@@ -210,6 +281,78 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/items/": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "produces": [],
+        "parameters": [],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/items/{id}": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "produces": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [],
+        "description": "",
+        "produces": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "qty": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }

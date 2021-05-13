@@ -34,7 +34,7 @@ app.use(passport.initialize());
 app.use('/uploads', express.static('uploads'));
 app.use("/api/users", users);
 app.use("/api/admin", admin);
-app.use("/api/item", item)
+app.use("/api/items", item)
 
 const port = process.env.PORT || 5000;  
 

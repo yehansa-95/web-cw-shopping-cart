@@ -1,9 +1,12 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types"; 
 import { connect } from "react-redux";
-import { logoutUser } from "../../../actions/authActions";  
+import { logoutUser } from "../../../actions/authActions";   
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button'; 
+import './navbar.css';
 
 class Navbar extends Component {
 
@@ -12,26 +15,18 @@ class Navbar extends Component {
         this.props.logoutUser();
     };
 
-    render() {
-        const { user } = this.props.auth;
+    render() { 
         return (
-            <div className="container-fluid p-0 ">
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a className="navbar-brand p-2" href="/">Shop</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                    <ul className="navbar-nav ml-auto"> 
-                        <li className="nav-item active">
-                            <a className="nav-link " href="#" onClick={this.onLogoutClick}>Logout ({user.name}) <FontAwesomeIcon icon={faSignOutAlt} /> </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
+            <div className="root">
+            <AppBar position="static">
+              <Toolbar>  
+                <Typography variant="h6" className="title">
+                  User Dashboard
+                </Typography>
+                <Button onClick={this.onLogoutClick} color="inherit">Logout</Button>
+              </Toolbar>
+            </AppBar>
+          </div> 
         );
     }
 }
