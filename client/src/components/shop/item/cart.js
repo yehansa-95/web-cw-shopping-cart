@@ -12,6 +12,7 @@ import ImagePlaceholder from '../../../images/ImagePlaceholder.png'
 import { toast, ToastContainer } from "react-toastify";
 import './Items.css';
 import "react-quill/dist/quill.snow.css";
+// import { put } from '../../../../../server/routes/api/oder';
 
 class cart extends Component {
 
@@ -22,6 +23,15 @@ class cart extends Component {
         imageData: ImagePlaceholder,
         errors: {}
     };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            records: []
+        };
+        this.getData = this.getData.bind(this);
+        console.log(this);
+    }
 
     handleSubmit = event => {
         event.preventDefault();
@@ -35,35 +45,14 @@ class cart extends Component {
         this.updateItem(item); 
     };
 
-    updateItem(item) {
-        console.log(item)
-        axios
-            .put("/api/admin/items/update", item)
-            .then(res => toast.success(res.data.message, {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 1500,
-            }))
-            .catch(err => {
-                this.setState({
-                    errors: err.response.data
-                })
-            })
-    }
-
     getData() {
-        const params = new URLSearchParams([['id', this.props.match.params.id]]);
         axios
-            .get("/api/admin/items/getById", { params })
+            .get("/api/order/cart")
             .then(res => {
                 console.log(res)
-                let resData = res.data
-                this.setState({
-                    name: resData.name,
-                    description: resData.description,
-                    price: resData.price,
-                    imageData: `${res.config.baseURL}/${resData.imageData}`
-                })
+                this.setState({ records: res.data })
             })
+            .catch()
             .catch()
     }
 
@@ -90,6 +79,17 @@ class cart extends Component {
         this.getData()
     }
 
+    update = async (id, qty) => {
+        
+        await axios.request({
+            method: 'PUT',
+            url: (`/api/order/cartedit/${id}`),
+            data: {
+                qty: qty
+            }
+        })
+  };
+
     render() {
         const { errors } = this.state;
         return (
@@ -97,65 +97,30 @@ class cart extends Component {
                 <Navbar />
                 <div className="d-flex" id="wrapper">
                     <Sidebar />
-                    <div className="container mt-2">
-                        <h1 className="mt-2 text-success">Update Item</h1>
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="form-group mt-2">
-                                <label className="mt-2 " for="image">Item Image</label>
-                                <input
-                                    type="file"
-                                    name="image"
-                                    id="image"
-                                    onChange={e => this.handleImageChange(e)}
-                                    className={classnames("", {
-                                        invalid: errors.imageData
-                                    })}
-                                />
-                                <img
-                                    className="image-preview"
-                                    src={this.state.imageData}
-                                    alt="Item Preview"
-                                />
-                                <span className="text-danger">{errors.imageData}</span>
+                    {this.state.records?.map((value, index) => (
+                        <div class="card w-75">
+                            <div class="card-body">
+                                <h5 class="card-title">{value.name} {value._id}</h5>
+                                <p class="card-text">Quntity : {value.qty}</p>
+                                <from onsubmit={this.update}>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        placeholder="QTY"
+                                        value={value.qty}
+                                        onChange={(qty) => this.setState({ qty: qty.target.value })}
+                                    />
+                                    <Link>
+                                        <button className="btn btn-primary"
+                                            tyle={{ marginLeft: '15px' }}
+                                        onClick = {() => this.update(value._id , this.state.qty)}> Update </button>
+                                </Link>
+                                </from>
                             </div>
-                            <div className="form-group mt-2">
-                                <label for="name">Item Name</label>
-                                <input type="text"
-                                    id="name"
-                                    value={this.state.name}
-                                    onChange={this.handleChange}
-                                    className={classnames("form-control", {
-                                        invalid: errors.name
-                                    })}
-                                />
-                            </div>
-                            <span className="text-danger">{errors.name}</span>
-                            <div className="form-group mt-2">
-                                <label for="description">Item Description</label>
-                                <textarea id="description"
-                                    value={this.state.description}
-                                    onChange={this.handleChange}
-                                    className={classnames("form-control", {
-                                        invalid: errors.description
-                                    })}
-                                    rows="3"
-                                />
-                                <span className="text-danger">{errors.description}</span>
-                            </div>
-                            <div className="form-group mt-2">
-                                <label for="price">Item Price</label>
-                                <input type="price" id="price" value={this.state.price}
-                                    onChange={this.handleChange}
-                                    className={classnames("form-control", {
-                                        invalid: errors.price
-                                    })}
-                                />
-                                <span className="text-danger">{errors.price}</span>
-                            </div>
-                            <button type="submit" className="btn btn-success mt-2">Submit</button>
-                        </form>
-                        <ToastContainer />
-                    </div>
+                        </div>
+                    ))}
+                    
+
                 </div>
             </div>
         );
