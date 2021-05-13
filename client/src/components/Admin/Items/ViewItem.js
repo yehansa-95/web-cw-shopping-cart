@@ -19,6 +19,7 @@ class ViewItem extends Component {
         name: "",
         description: "",
         price: "",
+        qty:"",
         imageData: ImagePlaceholder,
         errors: {}
     };
@@ -34,6 +35,7 @@ class ViewItem extends Component {
                     name: resData.name,
                     description: resData.description,
                     price: resData.price,
+                    qty:resData.qty,
                     imageData: `${res.config.baseURL}/${resData.imageData}`
                 })
             })
@@ -78,6 +80,12 @@ class ViewItem extends Component {
                             <div style={{marginBottom:100}} className="form-group mt-2">
                                 <label for="price">Item Price</label>
                                 <input disabled type="price" id="price" value={this.state.price} 
+                                    className="form-control"
+                                /> 
+                            </div> 
+                            <div style={{marginBottom:100}} className="form-group mt-2">
+                                <label for="qty">Item Quentity</label>
+                                <input disabled type="qty" id="qty" value={this.state.qty} 
                                     className="form-control"
                                 /> 
                             </div> 

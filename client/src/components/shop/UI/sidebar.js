@@ -13,6 +13,8 @@ import { makeStyles} from '@material-ui/core/styles';
 import './sidebar.css'; 
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Storefront } from '@material-ui/icons';
+import { googleOAuth2 } from '../../../actions/googleActions';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 const drawerWidth = 500;
 
@@ -48,6 +50,7 @@ class Sidebar extends Component {
 
     render() {
         console.log(window)
+        const { user } = this.props.auth;
         const drawer = (
             <div className={classes.toolbar}>
                 <Divider />
@@ -63,13 +66,15 @@ class Sidebar extends Component {
                             <ListItemIcon><Storefront /> </ListItemIcon>
                             <ListItemText primary="Cart" />
                         </ListItem>
-                    </Link>
-                    <Link to="" style={{ textDecoration: 'none', color: 'red' }}>
+                    </Link> 
+                    {this.props.googleauth.isAuthenticated ? <GoogleLogout
+                                    clientId="1013217801761-07r1hv0d02r63r9cnmoju6sdafrvg9ra.apps.googleusercontent.com"
+                                    buttonText="Logout"
+                                    onLogoutSuccess={this.props.googleOAuth2} /> :
                         <ListItem button onClick={this.onLogoutClick} key="Items">
                             <ListItemIcon><ExitToAppIcon color="secondary"/> </ListItemIcon>
-                            <ListItemText primary="Exit" />
-                        </ListItem>
-                    </Link> 
+                            <ListItemText primary="Exit" color="secondary"/>
+                        </ListItem> }
                 </List>
             </div>
 
@@ -82,14 +87,16 @@ class Sidebar extends Component {
 
 Sidebar.propTypes = {
     logoutUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    googleauth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    googleauth: state.googleauth,
 });
 
 export default connect(
     mapStateToProps,
-    { logoutUser }
+    { logoutUser,googleOAuth2 }
 )(Sidebar);

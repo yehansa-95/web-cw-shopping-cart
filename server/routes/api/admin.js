@@ -101,6 +101,7 @@ router.route("/items/add").post(upload.single('imageData'),(req, res) => {
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
+    qty:req.body.qty,
     imageData: req.file.path,
   });
 
@@ -129,7 +130,7 @@ router.delete('/items/delete', (req, res) => {
 });
 
 router.route('/items/update').put(upload.single('imageData'), (req, res) => {
-  console.log(req.body.id)
+  console.log(req.body)
   const { errors, isValid } = validateUpdateItemInput(req.body);
   if (!isValid) {
     console.log(errors)
@@ -140,9 +141,9 @@ router.route('/items/update').put(upload.single('imageData'), (req, res) => {
       if (item) { 
         var update = {}
         if (req.body.imageData == 'undefined'){
-          update = {'name': req.body.name, 'description': req.body.description, 'price': req.body.price};
+          update = {'name': req.body.name, 'description': req.body.description, 'price': req.body.price, 'qty': req.body.qty};
         }else{
-          update = {'name': req.body.name, 'description': req.body.description, 'price': req.body.price, 'imageData': req.file.path};
+          update = {'name': req.body.name, 'description': req.body.description, 'price': req.body.price, 'imageData': req.file.path,'qty': req.body.qty};
         }
           Item.updateOne({ _id: _id}, {$set: update}, function(err, result) {
               if (err) {

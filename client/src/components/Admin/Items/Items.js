@@ -72,7 +72,7 @@ class Items extends Component {
                     <div id="mainContent" className="container mt-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)' }}>
                         {this.state.records?.map((value, index) => ( 
                                 <div className="card">
-                                    <img className="card-img-top" src={value.imageData} alt="Card image cap"></img>
+                                    <img className="card-img-top" style={{height:200}} src={value.imageData} alt="Card image cap"></img>
                                     <div className="card-body">
                                         <h5 className="card-title">{value.name}</h5>
                                         <p className="card-text">{value.description}</p>

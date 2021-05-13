@@ -19,6 +19,7 @@ class CreateItem extends Component {
         name: "",
         description: "",
         price: "",
+        qty: "",
         imageData: ImagePlaceholder,
         errors: {}
     };
@@ -30,7 +31,8 @@ class CreateItem extends Component {
         item.append("imageData", event.target.elements.image.files[0]);    
         item.append("name", this.state.name);                       
         item.append("description", this.state.description);            
-        item.append("price", this.state.price);                         
+        item.append("price", this.state.price);     
+        item.append("qty", this.state.qty);                             
         this.createItem(item);           
     };
 
@@ -128,6 +130,16 @@ class CreateItem extends Component {
                                     })}
                                 />
                                 <span className="text-danger">{errors.price}</span>
+                            </div>
+                            <div className="form-group mt-2">
+                                <label for="qty">Item Quentity</label>
+                                <input type="qty" id="qty" value={this.state.qty}
+                                    onChange={this.handleChange}
+                                    className={classnames("form-control", {
+                                        invalid: errors.qty
+                                    })}
+                                />
+                                <span className="text-danger">{errors.qty}</span>
                             </div>
                             <button type="submit" className="btn btn-success mt-2">Submit</button>
                         </form>

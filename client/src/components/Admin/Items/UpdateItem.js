@@ -19,6 +19,7 @@ class UpdateItem extends Component {
         name: "",
         description: "",
         price: "",
+        qty: "",  
         imageData: ImagePlaceholder,
         errors: {}
     };
@@ -31,6 +32,7 @@ class UpdateItem extends Component {
         item.append("name", this.state.name);
         item.append("description", this.state.description);
         item.append("price", this.state.price);
+        item.append("qty", this.state.qty);
         item.append("id", this.props.match.params.id);
         this.updateItem(item);
     };
@@ -42,7 +44,11 @@ class UpdateItem extends Component {
             .then(res => toast.success(res.data.message, {
                 position: toast.POSITION.TOP_CENTER,
                 autoClose: 1500,
-            }))
+            }),
+            this.setState({
+                errors: {}
+            })
+            )
             .catch(err => {
                 this.setState({
                     errors: err.response.data
@@ -61,6 +67,7 @@ class UpdateItem extends Component {
                     name: resData.name,
                     description: resData.description,
                     price: resData.price,
+                    qty:resData.qty,
                     imageData: `${res.config.baseURL}/${resData.imageData}`
                 })
             })
@@ -151,6 +158,16 @@ class UpdateItem extends Component {
                                     })}
                                 />
                                 <span className="text-danger">{errors.price}</span>
+                            </div>
+                            <div className="form-group mt-2">
+                                <label for="qty">Item Quentity</label>
+                                <input type="text" id="qty" value={this.state.qty}
+                                    onChange={this.handleChange}
+                                    className={classnames("form-control", {
+                                        invalid: errors.qty
+                                    })}
+                                />
+                                <span className="text-danger">{errors.qty}</span>
                             </div>
                             <button type="submit" className="btn btn-success mt-2">Submit</button>
                         </form>
