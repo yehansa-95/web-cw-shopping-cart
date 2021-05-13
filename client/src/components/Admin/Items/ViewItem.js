@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import axios from "../../../actions/axios-config";
-import { Link, withRouter, useParams } from "react-router-dom";
+import axios from "../../../actions/axios-config"; 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Navbar from "../UIs/Navbar";
-import Sidebar from "../UIs/Sidebar";
-import ReactQuill from "react-quill";
-import classnames from "classnames";
-import { createItemRequest } from "../../../actions/itemActions";
-import ImagePlaceholder from '../../../images/ImagePlaceholder.png'
-import { toast, ToastContainer } from "react-toastify";
+import Sidebar from "../UIs/Sidebar"; 
+import ImagePlaceholder from '../../../images/ImagePlaceholder.png' 
 import './Items.css';
 import "react-quill/dist/quill.snow.css";
 
@@ -19,6 +14,7 @@ class ViewItem extends Component {
         name: "",
         description: "",
         price: "",
+        qty:"",
         imageData: ImagePlaceholder,
         errors: {}
     };
@@ -34,6 +30,7 @@ class ViewItem extends Component {
                     name: resData.name,
                     description: resData.description,
                     price: resData.price,
+                    qty:resData.qty,
                     imageData: `${res.config.baseURL}/${resData.imageData}`
                 })
             })
@@ -81,7 +78,12 @@ class ViewItem extends Component {
                                     className="form-control"
                                 /> 
                             </div> 
-                        <ToastContainer />
+                            <div style={{marginBottom:100}} className="form-group mt-2">
+                                <label for="qty">Item Quentity</label>
+                                <input disabled type="qty" id="qty" value={this.state.qty} 
+                                    className="form-control"
+                                /> 
+                            </div>  
                     </div>
                 </div>
             </div>

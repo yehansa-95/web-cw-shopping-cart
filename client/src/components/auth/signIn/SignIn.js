@@ -13,6 +13,9 @@ import { connect } from "react-redux";
 import { loginUserRequest } from "../../../actions/authActions";  
 import classnames from "classnames";
 import Grid from "@material-ui/core/Grid";
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { googleOAuth2 } from '../../../actions/googleActions';
+import { bindActionCreators } from 'redux';
 
 class SignIn extends Component {
     state = {
@@ -24,7 +27,7 @@ class SignIn extends Component {
 
     componentWillReceiveProps(nextProps) {
         console.log(nextProps)
-        if (nextProps.auth.isAuthenticated) {
+        if (nextProps.auth.isAuthenticated || nextProps.googleauth.isAuthenticated) {
             this.props.history.push("/dashboard"); 
         }
 
@@ -36,7 +39,7 @@ class SignIn extends Component {
     }
 
     componentDidMount() {
-        if (this.props.auth.isAuthenticated) { 
+        if (this.props.auth.isAuthenticated || this.props.googleauth.isAuthenticated) { 
             if (this.props.auth.user.email != null){
                 this.props.history.push("/dashboard");
             }else{
@@ -120,6 +123,18 @@ class SignIn extends Component {
                         >
                             Sign In
             </Button>
+
+            <div className="avatar">
+            <GoogleLogin 
+                clientId="1013217801761-07r1hv0d02r63r9cnmoju6sdafrvg9ra.apps.googleusercontent.com"
+                buttonText="Sign in with Google"
+                onSuccess={this.props.googleOAuth2}
+                onFailure={this.props.googleOAuth2}
+                cookiePolicy={'single_host_origin'}
+                isSignedIn={true}
+                fullWidth
+              /> 
+               </div>
             <Button component={Link} to="/signIn-admin" 
                             fullWidth
                             variant="contained"
@@ -148,15 +163,17 @@ class SignIn extends Component {
 SignIn.propTypes = {
     loginUserRequest: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    googleauth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     auth: state.auth,
+    googleauth: state.googleauth,
     errors: state.errors
 });
-
+ 
 export default connect(
     mapStateToProps,
-    { loginUserRequest }
+    { loginUserRequest,googleOAuth2 }
 )(SignIn);
