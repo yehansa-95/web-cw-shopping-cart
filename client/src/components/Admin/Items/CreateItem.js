@@ -114,7 +114,7 @@ class CreateItem extends Component {
                                 <span className="text-danger">{errors.description}</span>
                             </div>
                             <div className="form-group mt-2">
-                                <label htmlFor="price">Item Price</label>
+                                <label htmlFor="price">Item Price(Rs.)</label>
                                 <input type="price" id="price" value={this.state.price}
                                     onChange={this.handleChange}
                                     className={classnames("form-control", {

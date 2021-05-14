@@ -10,6 +10,7 @@ const validateAddItemInput = require("../../validation/add-item");
 const validateUpdateItemInput = require("../../validation/edit-item");
 const Admin = require("../../models/Admin");
 const Item = require("../../models/Item");
+const Order = require('../../models/order');
 const upload = require('../../middleware/upload');
 
 router.post("/register", (req, res) => {
@@ -165,6 +166,16 @@ router.get("/items/getById", (req, res) => {
 
 router.get("/items/all", (req, res) => {
   Item.find({}).then(items => {  
+      if (items) {
+        return res.status(200).send(items);
+      }else{
+        return res.status(400).json({ message: 'Items Not available.' });
+      }
+  });
+});
+
+router.get("/orders/all", (req, res) => {
+  Order.find({}).then(items => {  
       if (items) {
         return res.status(200).send(items);
       }else{

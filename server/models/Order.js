@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema({
+    name: {
+        type: String,
+        ref: "name"
+    },
     userId: {
         type: String,
         ref: "user"

@@ -22,6 +22,7 @@ import ViewItem from "./components/Admin/Items/ViewItem";
 import Dashboard from "./components/shop/item/items";
 import Cart from "./components/shop/item/cart"
 import  ShowItem  from "./components/shop/item/showItem"
+import ViewOrders from "./components/Admin/Orders/ViewOrders";
 
 if (localStorage.jwtToken) { 
   const token = localStorage.jwtToken;
@@ -45,6 +46,7 @@ const App = () => {
           <Route exact path="/signIn-admin" component={AdminSignIn} />  
           <Route exact path="/signUp-admin" component={AdminSignUp} />   
           <Switch>
+              <PrivateRoute exact path="/orders" component={ViewOrders} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/cart" component={Cart} />
               <PrivateRoute exact path="/showItems" component={ShowItem} />
