@@ -13,7 +13,7 @@ import './AdminSignUp.css';
 import { Storefront } from '@material-ui/icons';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerAdminRequest } from "../../../../actions/authActions";  
+import { registerAdminRequest } from "../../../../actions/authActions";
 import classnames from "classnames";
 
 class AdminSignUp extends Component {
@@ -49,118 +49,120 @@ class AdminSignUp extends Component {
         }
     }
 
-    componentDidMount() { 
-        if (this.props.auth.isAuthenticated) { 
-            if (this.props.auth.user.email != null){
+    componentDidMount() {
+        if (this.props.auth.isAuthenticated) {
+            if (this.props.auth.user.email != null) {
                 this.props.history.push("/dashboard");
-            }else{
+            } else {
                 this.props.history.push("/view-items");
             }
         }
-      }
+    }
 
     render() {
         const { errors } = this.state;
         return (
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className="paper">
-                    <div className="avatar">
-                        <Avatar >
-                            <Storefront />
-                        </Avatar>
-                    </div>
-                    <Typography component="h1" variant="h5">
-                        Sign up - Admin
+            <div className="p-0 bgimage">
+                <Container style={{ paddingTop: 20 }} component="main" maxWidth="xs">
+                    <CssBaseline />
+                    <div className="paper">
+                        <div className="avatar">
+                            <Avatar >
+                                <Storefront />
+                            </Avatar>
+                        </div>
+                        <Typography component="h1" variant="h5">
+                            Sign up - Admin
         </Typography>
-                    <form className="form" noValidate onSubmit={this.handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}  >
-                                <TextField
-                                    autoComplete="name"
-                                    name="name"
-                                    variant="outlined"
-                                    fullWidth
-                                    id="name"
-                                    placeholder="First Name"
-                                    value={this.state.name}
-                                    onChange={this.handleChange}
-                                    className={classnames("", {
-                                        invalid: errors.name
-                                    })}
-                                />
-                                <span className="error-text">{errors.name}</span>
+                        <form className="form" noValidate onSubmit={this.handleSubmit}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}  >
+                                    <TextField
+                                        autoComplete="name"
+                                        name="name"
+                                        variant="outlined"
+                                        fullWidth
+                                        id="name"
+                                        placeholder="First Name"
+                                        value={this.state.name}
+                                        onChange={this.handleChange}
+                                        className={classnames("", {
+                                            invalid: errors.name
+                                        })}
+                                    />
+                                    <span className="error-text">{errors.name}</span>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        fullWidth
+                                        id="username"
+                                        placeholder="Username"
+                                        name="username"
+                                        autoComplete="username"
+                                        value={this.state.username}
+                                        onChange={this.handleChange}
+                                        className={classnames("", {
+                                            invalid: errors.username
+                                        })}
+                                    />
+                                    <span className="error-text">{errors.username}</span>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        fullWidth
+                                        name="password"
+                                        placeholder="Password"
+                                        type="password"
+                                        id="password"
+                                        value={this.state.password}
+                                        autoComplete="current-password"
+                                        onChange={this.handleChange}
+                                        className={classnames("", {
+                                            invalid: errors.password
+                                        })}
+                                    />
+                                    <span className="error-text">{errors.password}</span>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        fullWidth
+                                        name="cpassword"
+                                        placeholder="Confirm Password"
+                                        type="password"
+                                        id="cpassword"
+                                        value={this.state.cpassword}
+                                        autoComplete="current-password"
+                                        onChange={this.handleChange}
+                                        className={classnames("", {
+                                            invalid: errors.cpassword
+                                        })}
+                                    />
+                                    <span className="error-text">{errors.cpassword}</span>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    id="username"
-                                    placeholder="Username"
-                                    name="username"
-                                    autoComplete="username"
-                                    value={this.state.username}
-                                    onChange={this.handleChange}
-                                    className={classnames("", {
-                                        invalid: errors.username
-                                    })}
-                                />
-                                <span className="error-text">{errors.username}</span>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    name="password"
-                                    placeholder="Password"
-                                    type="password"
-                                    id="password"
-                                    value={this.state.password}
-                                    autoComplete="current-password"
-                                    onChange={this.handleChange}
-                                    className={classnames("", {
-                                        invalid: errors.password
-                                    })}
-                                />
-                                <span className="error-text">{errors.password}</span>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    name="cpassword"
-                                    placeholder="Confirm Password"
-                                    type="password"
-                                    id="cpassword"
-                                    value={this.state.cpassword}
-                                    autoComplete="current-password"
-                                    onChange={this.handleChange}
-                                    className={classnames("", {
-                                        invalid: errors.cpassword
-                                    })}
-                                />
-                                <span className="error-text">{errors.cpassword}</span>
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className="submit"
-                        >
-                            Sign Up
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className="submit"
+                            >
+                                Sign Up
           </Button>
-                        <Grid container justify="flex-end">
-                            <Grid item>
-                                <Link to="signIn-admin" variant="body2">
-                                    Already have an account? Sign in
+                            <Grid container justify="center">
+                                <Grid item>
+                                    <Link to="signIn-admin" variant="body2">
+                                        Already have an account? Sign in
               </Link>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </form>
-                </div>
-            </Container>
+                        </form>
+                    </div>
+                </Container>
+            </div>
         );
     }
 }

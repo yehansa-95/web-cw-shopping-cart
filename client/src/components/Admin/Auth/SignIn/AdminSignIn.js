@@ -1,19 +1,15 @@
-import React, { Component } from 'react';
-import axios from "axios";
-import { Link } from "react-router-dom";
-import Avatar from "@material-ui/core/Avatar";
+import React, { Component } from 'react'; 
+import { Link } from "react-router-dom"; 
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Grid from "@material-ui/core/Grid"; 
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import './AdminSignIn.css';
-import { Storefront } from '@material-ui/icons';
+import './AdminSignIn.css'; 
 import PropTypes from "prop-types";
-import { connect } from "react-redux"; 
-import { loginAdminRequest } from "../../../../actions/authActions";  
+import { connect } from "react-redux";
+import { loginAdminRequest } from "../../../../actions/authActions";
 import classnames from "classnames";
 
 class AdminSignIn extends Component {
@@ -36,15 +32,15 @@ class AdminSignIn extends Component {
         }
     }
 
-    componentDidMount() { 
-        if (this.props.auth.isAuthenticated) { 
-            if (this.props.auth.user.email != null){
+    componentDidMount() {
+        if (this.props.auth.isAuthenticated) {
+            if (this.props.auth.user.email != null) {
                 this.props.history.push("/dashboard");
-            }else{
+            } else {
                 this.props.history.push("/view-items");
             }
         }
-      }
+    }
 
     handleSubmit = event => {
         event.preventDefault();
@@ -63,85 +59,82 @@ class AdminSignIn extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className="paper">
-                    <div className="avatar">
-                        <Avatar >
-                            <Storefront />
-                        </Avatar>
-                    </div>
-                    <Typography component="h1" variant="h5">
-                        Sign in - Admin
+            <div className="p-0 bgimage">
+                <Container style={{ paddingTop: 20 }} maxWidth="xs">
+                    <CssBaseline />
+                    <div className="paper">
+                        <Typography component="h1" variant="h5">
+                            Sign in - Admin
           </Typography>
-                    <form className="form" noValidate onSubmit={this.handleSubmit}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            fullWidth
-                            id="username"
-                            placeholder="Username"
-                            name="username"
-                            autoComplete="username"
-                            value={this.state.username}
-                            onChange={this.handleChange}
-                            className={classnames("", {
-                                invalid: errors.username || errors.usernamenotfound
-                            })}
-                        />
-                        <span className="error-text">
-                            {errors.username}
-                            {errors.usernamenotfound}
-                        </span>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            fullWidth
-                            name="password"
-                            placeholder="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            className={classnames("", {
-                                invalid: errors.password || errors.passwordincorrect
-                            })}
-                        />
-                        <span className="error-text">
-                            {errors.password}
-                            {errors.passwordincorrect}
-                        </span>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className="submit"
-                        >
-                            Sign In
+                        <form className="form" noValidate onSubmit={this.handleSubmit}>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                fullWidth
+                                id="username"
+                                placeholder="Username"
+                                name="username"
+                                autoComplete="username"
+                                value={this.state.username}
+                                onChange={this.handleChange}
+                                className={classnames("", {
+                                    invalid: errors.username || errors.usernamenotfound
+                                })}
+                            />
+                            <span className="error-text">
+                                {errors.username}
+                                {errors.usernamenotfound}
+                            </span>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                fullWidth
+                                name="password"
+                                placeholder="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                className={classnames("", {
+                                    invalid: errors.password || errors.passwordincorrect
+                                })}
+                            />
+                            <span className="error-text">
+                                {errors.password}
+                                {errors.passwordincorrect}
+                            </span>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className="submit"
+                            >
+                                Sign In
             </Button>
-            <Button component={Link} to="signIn" 
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            className="submit"
-                        >
-                            Sign In as User
+                            <Button component={Link} to="signIn"
+                                fullWidth
+                                variant="contained"
+                                color="secondary"
+                                className="submit"
+                            >
+                                Sign In as User
           </Button>
-                        <Grid container
-                            spacing={0}
-                            direction="column"
-                            alignItems="center" style={{ marginTop: '10vh' }} >
-                            <Grid item>
-                                <Link color="inherit" to="/signUp-admin" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
+                            <Grid container
+                                spacing={0}
+                                direction="column"
+                                alignItems="center" style={{ marginTop: '10vh' }} >
+                                <Grid item>
+                                    <Link color="inherit" to="/signUp-admin" variant="body2">
+                                        {"Don't have an account? Sign Up"}
+                                    </Link>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </form>
-                </div>
-            </Container>
+                        </form>
+                    </div>
+                </Container>
+            </div>
         );
     }
 }

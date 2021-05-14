@@ -73,7 +73,7 @@ class ViewItem extends Component {
                                 /> 
                             </div>
                             <div className="form-group mt-2">
-                                <label htmlFor="price">Item Price</label>
+                                <label htmlFor="price">Item Price(Rs.)</label>
                                 <input disabled type="price" id="price" value={this.state.price} 
                                     className="form-control"
                                 /> 

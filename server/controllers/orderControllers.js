@@ -18,6 +18,7 @@ module.exports.checkout = async (req,res) => {
         let cart = await Cart.findOne({userId});
         let user = await User.findOne({_id: userId});
         const email = user.email;
+        const name =user.name
         if(cart){
 /*             const charge = await stripe.charges.create({
                 amount: cart.bill,
@@ -32,6 +33,7 @@ module.exports.checkout = async (req,res) => {
 
             const order = await Order.create({
                 userId,
+                name,
                 items: cart.items,
                 bill: cart.bill
             });

@@ -3,7 +3,7 @@ const isEmpty = require("is-empty");
 
 module.exports = function validateAdminRegisterInput(data) {
     let errors = {};
-    
+
     data.name = !isEmpty(data.name) ? data.name : "";
     data.username = !isEmpty(data.username) ? data.username : "";
     data.password = !isEmpty(data.password) ? data.password : "";
@@ -15,7 +15,7 @@ module.exports = function validateAdminRegisterInput(data) {
 
     if (Validator.isEmpty(data.username)) {
         errors.username = "Username field is required";
-    } 
+    }
     if (Validator.isEmpty(data.password)) {
         errors.password = "Password field is required";
     }
