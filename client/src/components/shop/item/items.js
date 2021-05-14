@@ -5,12 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "../../../actions/axios-config";
-import './Items.css';
-import { ToastContainer } from "react-toastify";
+import './Items.css'; 
 import { Link } from "react-router-dom";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-
+import { toast, ToastContainer } from "react-toastify";
 import { addToCart } from '../../../actions/cartActions';
 
 
@@ -53,7 +52,10 @@ class Items extends Component {
     onAddToCart = async (id, productId) => {
         console.log(id,productId)
         await this.props.addToCart(id, productId, 1);
-        alert ('Item added to Cart');
+        toast.success('Item added to Cart', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 1500,
+        })
     }
 
     render() {

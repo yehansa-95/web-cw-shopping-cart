@@ -8,7 +8,7 @@ const stripe = require('stripe')(keys.StripeAPIKey);
 
 module.exports.get_orders = async (req,res) => {
     const userId = req.params.id;
-    Order.find({userId}).sort({date:-1}).then(orders => res.json(orders));
+    Order.find({userId}).sort({date:-1}).then(orders => res.status(200).json(orders));
 }
 
 module.exports.checkout = async (req,res) => {
