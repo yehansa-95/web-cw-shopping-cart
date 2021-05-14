@@ -35,7 +35,7 @@ router.post("/register", (req, res) => {
           newAdmin
             .save()
             .then(admin => res.status(200).json(admin))
-            .catch(err => console.log(err));
+            .catch(err => res.status(500).json(err));
         });
       });
     }
@@ -108,23 +108,16 @@ router.route("/items/add").post(upload.single('imageData'),(req, res) => {
   newItem
     .save()
     .then(item => res.status(200).json(item))
-    .catch(err => console.log(err));
+    .catch(err => res.status(500).send(err));
 
 });
 
-router.get('/items/all', (req, res) => {
-  Item.find({}).then(items => {
-      if (items) {
-          return res.status(200).send(items);
-      }
-  });
-});
-
-router.delete('/items/delete', (req, res) => {
-  console.log(req.body)
+router.delete('/items/delete', (req, res) => { 
   Item.deleteOne({ _id: req.body._id}).then(item => {
       if (item) {
           return res.status(200).json({message: 'Item deleted successfully.', success: true})
+      }else{
+        return res.status(400).json({ message: 'Item Not available.' });
       }
   });
 });
@@ -153,7 +146,7 @@ router.route('/items/update').put(upload.single('imageData'), (req, res) => {
               }
           });
       } else {
-          return res.status(400).json({ message: 'Item Not available.' });
+          return res.status(404).json({ message: 'Item Not available.' });
       }
   });
 });
@@ -171,9 +164,11 @@ router.get("/items/getById", (req, res) => {
 
 
 router.get("/items/all", (req, res) => {
-  Item.find({}).then(items => {
+  Item.find({}).then(items => {  
       if (items) {
-          return res.status(200).send(items);
+        return res.status(200).send(items);
+      }else{
+        return res.status(400).json({ message: 'Items Not available.' });
       }
   });
 });

@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import axios from "../../../actions/axios-config";
-import { Link, withRouter, useParams } from "react-router-dom";
+import axios from "../../../actions/axios-config"; 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Navbar from "../UIs/Navbar";
-import Sidebar from "../UIs/Sidebar";
-import ReactQuill from "react-quill";
-import classnames from "classnames";
-import { createItemRequest } from "../../../actions/itemActions";
-import ImagePlaceholder from '../../../images/ImagePlaceholder.png'
-import { toast, ToastContainer } from "react-toastify";
+import Sidebar from "../UIs/Sidebar"; 
+import ImagePlaceholder from '../../../images/ImagePlaceholder.png' 
 import './Items.css';
 import "react-quill/dist/quill.snow.css";
 
@@ -88,8 +83,7 @@ class ViewItem extends Component {
                                 <input disabled type="qty" id="qty" value={this.state.qty} 
                                     className="form-control"
                                 /> 
-                            </div> 
-                        <ToastContainer />
+                            </div>  
                     </div>
                 </div>
             </div>

@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-import axios from "../../../actions/axios-config";
-import { Link, withRouter } from "react-router-dom";
+import axios from "../../../actions/axios-config"; 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Navbar from "../UIs/Navbar";
-import Sidebar from "../UIs/Sidebar";
-import ReactQuill from "react-quill";
-import { toast, ToastContainer } from "react-toastify";
-import classnames from "classnames";
-import { createItemRequest } from "../../../actions/itemActions";
+import Sidebar from "../UIs/Sidebar"; 
+import classnames from "classnames"; 
 import ImagePlaceholder from '../../../images/ImagePlaceholder.png'
-import './Items.css';
-import "react-quill/dist/quill.snow.css";
+import './Items.css'; 
 
 class CreateItem extends Component {
 
@@ -65,10 +60,7 @@ class CreateItem extends Component {
             });
         }
     }
-
-    componentDidMount() {
-    }
-
+ 
     render() {
         const { errors } = this.state;
         return (

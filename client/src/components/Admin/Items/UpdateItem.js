@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import axios from "../../../actions/axios-config";
-import { Link, withRouter, useParams } from "react-router-dom";
+import axios from "../../../actions/axios-config"; 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Navbar from "../UIs/Navbar";
-import Sidebar from "../UIs/Sidebar";
-import ReactQuill from "react-quill";
-import classnames from "classnames";
-import { createItemRequest } from "../../../actions/itemActions";
+import Sidebar from "../UIs/Sidebar"; 
+import classnames from "classnames"; 
 import ImagePlaceholder from '../../../images/ImagePlaceholder.png'
 import { toast, ToastContainer } from "react-toastify";
 import './Items.css';
