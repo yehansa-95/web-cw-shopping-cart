@@ -57,7 +57,7 @@ class ViewItem extends Component {
                                     alt="Item Preview"
                                 />  
                             <div className="form-group mt-2">
-                                <label for="name">Item Name</label>
+                                <label htmlFor="name">Item Name</label>
                                 <input disabled type="text"
                                     id="name"
                                     value={this.state.name} 
@@ -65,21 +65,21 @@ class ViewItem extends Component {
                                 />
                             </div> 
                             <div className="form-group mt-2">
-                                <label for="description">Item Description</label>
+                                <label htmlFor="description">Item Description</label>
                                 <textarea disabled id="description"
                                     value={this.state.description} 
                                     className="form-control" 
                                     rows="3"
                                 /> 
                             </div>
-                            <div style={{marginBottom:100}} className="form-group mt-2">
-                                <label for="price">Item Price</label>
+                            <div className="form-group mt-2">
+                                <label htmlFor="price">Item Price</label>
                                 <input disabled type="price" id="price" value={this.state.price} 
                                     className="form-control"
                                 /> 
                             </div> 
                             <div style={{marginBottom:100}} className="form-group mt-2">
-                                <label for="qty">Item Quentity</label>
+                                <label htmlFor="qty">Item Quentity</label>
                                 <input disabled type="qty" id="qty" value={this.state.qty} 
                                     className="form-control"
                                 /> 

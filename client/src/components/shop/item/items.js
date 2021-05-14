@@ -51,6 +51,7 @@ class Items extends Component {
     }
 
     onAddToCart = async (id, productId) => {
+        console.log(id,productId)
         await this.props.addToCart(id, productId, 1);
         alert ('Item added to Cart');
     }
@@ -65,7 +66,7 @@ class Items extends Component {
                     <div id="mainContent" className="container mt-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)' }}>
                         {this.state.records?.map((value, index) => ( 
                             <div className="card" key={ value._id }>
-                                    <img className="card-img-top" src={value.imageData} alt="Card image cap"></img>
+                                    <img className="card-img-top" style={{height:300}} src={value.imageData} alt="Card image cap"></img>
                                     <div className="card-body">
                                         <h5 className="card-title">{value.name}</h5>
                                         <p className="card-text">{value.description}</p>

@@ -105,7 +105,7 @@ class UpdateItem extends Component {
                         <h1 className="mt-2 text-success">Update Item</h1>
                         <form onSubmit={this.handleSubmit}>
                             <div className="form-group mt-2">
-                                <label className="mt-2 " for="image">Item Image</label>
+                                <label className="mt-2 " htmlFor="image">Item Image</label>
                                 <input
                                     type="file"
                                     name="image"
@@ -123,7 +123,7 @@ class UpdateItem extends Component {
                                 <span className="text-danger">{errors.imageData}</span>
                             </div>
                             <div className="form-group mt-2">
-                                <label for="name">Item Name</label>
+                                <label htmlFor="name">Item Name</label>
                                 <input type="text"
                                     id="name"
                                     value={this.state.name}
@@ -135,7 +135,7 @@ class UpdateItem extends Component {
                             </div>
                             <span className="text-danger">{errors.name}</span>
                             <div className="form-group mt-2">
-                                <label for="description">Item Description</label>
+                                <label htmlFor="description">Item Description</label>
                                 <textarea id="description"
                                     value={this.state.description}
                                     onChange={this.handleChange}
@@ -147,7 +147,7 @@ class UpdateItem extends Component {
                                 <span className="text-danger">{errors.description}</span>
                             </div>
                             <div className="form-group mt-2">
-                                <label for="price">Item Price</label>
+                                <label htmlFor="price">Item Price</label>
                                 <input type="price" id="price" value={this.state.price}
                                     onChange={this.handleChange}
                                     className={classnames("form-control", {
@@ -157,7 +157,7 @@ class UpdateItem extends Component {
                                 <span className="text-danger">{errors.price}</span>
                             </div>
                             <div className="form-group mt-2">
-                                <label for="qty">Item Quentity</label>
+                                <label htmlFor="qty">Item Quentity</label>
                                 <input type="text" id="qty" value={this.state.qty}
                                     onChange={this.handleChange}
                                     className={classnames("form-control", {

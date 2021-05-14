@@ -1,6 +1,6 @@
 import axios from "../actions/axios-config"; 
 import { returnErrors } from './errorActions';
-import { GET_CART,ADD_TO_CART, DELETE_FROM_CART, CART_LOADING } from './types';
+import { GET_CART,ADD_TO_CART, DELETE_FROM_CART, CART_LOADING,REMOVE_FROM_CART } from './types';
 
 export const getCart = (id) => dispatch => {
     dispatch(setCartLoading());
@@ -16,6 +16,15 @@ export const addToCart = (id, productId, quantity) => dispatch => {
     axios.post(`/api/cart/${id}`, {productId, quantity})
         .then(res => dispatch({
             type: ADD_TO_CART,
+            payload: res.data
+        }))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+}
+
+export const removeOneFromCart = (id, productId, quantity) => dispatch => {
+    axios.post(`/api/cart/remove/${id}`, {productId, quantity})
+        .then(res => dispatch({
+            type: REMOVE_FROM_CART,
             payload: res.data
         }))
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));

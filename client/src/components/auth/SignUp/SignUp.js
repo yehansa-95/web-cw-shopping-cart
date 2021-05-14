@@ -33,7 +33,7 @@ class SignUp extends Component {
             email: this.state.email,
             password: this.state.password,
             cpassword: this.state.cpassword
-        }
+        }  
         this.props.registerUserRequest(user, this.props.history);
     };
 

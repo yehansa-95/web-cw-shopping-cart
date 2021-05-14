@@ -20,7 +20,7 @@ import ViewItem from "./components/Admin/Items/ViewItem";
 
 //import shop component
 import Dashboard from "./components/shop/item/items";
-import Cart from "./components/shop/item/Cart"
+import Cart from "./components/shop/item/cart"
 import  ShowItem  from "./components/shop/item/showItem"
 
 if (localStorage.jwtToken) { 
