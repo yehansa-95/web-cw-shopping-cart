@@ -1,178 +1,112 @@
-import React, { Component } from 'react';
-import axios from "../../../actions/axios-config";
-import { Link, withRouter, useParams } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import Navbar from "../UI/navbar";
-import Sidebar from "../UI/sidebar";
-import ReactQuill from "react-quill";
-import classnames from "classnames";
-import { createItemRequest } from "../../../actions/itemActions";
-import ImagePlaceholder from '../../../images/ImagePlaceholder.png'
-import { toast, ToastContainer } from "react-toastify";
-import './Items.css';
-import "react-quill/dist/quill.snow.css";
+import { Component, Fragment } from 'react';
+import AppNavbar from '../UI/navbar';
 
-class cart extends Component {
+import {Card, CardText, CardBody, CardTitle, CardSubtitle, Button, Alert, Container} from 'reactstrap';
+
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import "./CartScreen.css";
+
+// Components
+import Checkout from './Checkout';
+
+
+// Actions
+import { getCart, deleteFromCart } from '../../../actions/cartActions';
+import { checkout } from '../../../actions/orderActions';
+
+
+
+class Cart extends Component {
 
     state = {
-        name: "",
-        description: "",
-        price: "",
-        imageData: ImagePlaceholder,
-        errors: {}
-    };
-
-    handleSubmit = event => {
-        event.preventDefault();
-        let item = {};
-        item = new FormData();
-        item.append("imageData", event.target.elements.image.files[0]);
-        item.append("name", this.state.name);
-        item.append("description", this.state.description);
-        item.append("price", this.state.price);
-        item.append("id", this.props.match.params.id);
-        this.updateItem(item); 
-    };
-
-    updateItem(item) {
-        console.log(item)
-        axios
-            .put("/api/admin/items/update", item)
-            .then(res => toast.success(res.data.message, {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 1500,
-            }))
-            .catch(err => {
-                this.setState({
-                    errors: err.response.data
-                })
-            })
+        loaded: false,
     }
 
-    getData() {
-        const params = new URLSearchParams([['id', this.props.match.params.id]]);
-        axios
-            .get("/api/admin/items/getById", { params })
-            .then(res => {
-                console.log(res)
-                let resData = res.data
-                this.setState({
-                    name: resData.name,
-                    description: resData.description,
-                    price: resData.price,
-                    imageData: `${res.config.baseURL}/${resData.imageData}`
-                })
-            })
-            .catch()
+    static propTypes = {
+        getCart: PropTypes.func.isRequired,
+        isAuthenticated: PropTypes.bool,
+        addToCart: PropTypes.func.isRequired,
+        deleteFromCart: PropTypes.func.isRequired,
+        user: PropTypes.object.isRequired,
+        cart: PropTypes.object.isRequired,
+        checkout: PropTypes.func.isRequired
     }
 
-    handleChange = event => {
-        this.setState({ [event.target.id]: event.target.value });
+    getCartItems = async (id) => {
+        await this.props.getCart(id);
+        this.state.loaded = true;
     }
 
-    handleImageChange(e) {
-        this.setState({
-            imageData: URL.createObjectURL(e.target.files[0])
-        });
-    };
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.errors) {
-            console.log(nextProps.errors)
-            this.setState({
-                errors: nextProps.errors
-            });
+    onDeleteFromCart = (id, itemId) => {
+        this.props.deleteFromCart(id, itemId);
+    } 
+    
+    render(){
+        const user = this.props.user;
+        if(this.props.isAuthenticated && !this.props.cart.loading && !this.state.loaded){
+            this.getCartItems(user.id);
         }
-    }
 
-    componentDidMount() {
-        this.getData()
-    }
 
-    render() {
-        const { errors } = this.state;
-        return (
-            <div>
-                <Navbar />
-                <div className="d-flex" id="wrapper">
-                    <Sidebar />
-                    <div className="container mt-2">
-                        <h1 className="mt-2 text-success">Update Item</h1>
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="form-group mt-2">
-                                <label className="mt-2 " for="image">Item Image</label>
-                                <input
-                                    type="file"
-                                    name="image"
-                                    id="image"
-                                    onChange={e => this.handleImageChange(e)}
-                                    className={classnames("", {
-                                        invalid: errors.imageData
-                                    })}
-                                />
-                                <img
-                                    className="image-preview"
-                                    src={this.state.imageData}
-                                    alt="Item Preview"
-                                />
-                                <span className="text-danger">{errors.imageData}</span>
-                            </div>
-                            <div className="form-group mt-2">
-                                <label for="name">Item Name</label>
-                                <input type="text"
-                                    id="name"
-                                    value={this.state.name}
-                                    onChange={this.handleChange}
-                                    className={classnames("form-control", {
-                                        invalid: errors.name
-                                    })}
-                                />
-                            </div>
-                            <span className="text-danger">{errors.name}</span>
-                            <div className="form-group mt-2">
-                                <label for="description">Item Description</label>
-                                <textarea id="description"
-                                    value={this.state.description}
-                                    onChange={this.handleChange}
-                                    className={classnames("form-control", {
-                                        invalid: errors.description
-                                    })}
-                                    rows="3"
-                                />
-                                <span className="text-danger">{errors.description}</span>
-                            </div>
-                            <div className="form-group mt-2">
-                                <label for="price">Item Price</label>
-                                <input type="price" id="price" value={this.state.price}
-                                    onChange={this.handleChange}
-                                    className={classnames("form-control", {
-                                        invalid: errors.price
-                                    })}
-                                />
-                                <span className="text-danger">{errors.price}</span>
-                            </div>
-                            <button type="submit" className="btn btn-success mt-2">Submit</button>
-                        </form>
-                        <ToastContainer />
-                    </div>
-                </div>
-            </div>
-        );
+        return(
+          <div>
+              <AppNavbar/>
+              {this.props.isAuthenticated ?
+                  <Fragment>
+                      {this.props.cart.cart ? null :
+                          <Alert color="info" className="text-center">Your cart is empty!</Alert>
+                      }
+                  </Fragment>
+                  : <Alert color="danger" className="text-center">Login to View!</Alert>
+              }  
+      
+          
+              {this.props.isAuthenticated && !this.props.cart.loading && this.state.loaded && this.props.cart.cart?
+              <Container>
+                  <div className="row">
+                      {this.props.cart.cart.items.map((item)=>(
+                          <div className="col-md-4">
+                      <Card>
+                          <CardBody>
+                              <CardTitle tag="h5">{item.name}</CardTitle>
+                              <CardSubtitle tag="h6">Rs. {item.price}</CardSubtitle>
+                              <CardText>Quantity - {item.quantity}</CardText>
+                              <Button color="danger" onClick={this.onDeleteFromCart.bind(this, user.id, item.productId)}>Delete</Button>
+                          </CardBody>
+                      </Card>
+                      <br/>
+                      </div>
+                      ))}
+                      <div class="col-md-12">
+                      <Card>
+                          <CardBody>
+                              <CardTitle tag="h5">Total Cost = Rs. {this.props.cart.cart.bill}</CardTitle>
+                              <Checkout
+                                  user={user.id}
+                                  amount={this.props.cart.cart.bill}
+                                  checkout={this.props.checkout}
+                              />                   
+                          </CardBody>
+                      </Card>
+                      </div>
+                  </div>
+              </Container>
+                  :null}
+          </div>
+
+          
+          
+      )
+
+
     }
 }
 
-cart.propTypes = {
-    auth: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
-};
+const mapStateToProps = (state) => ({
+    cart: state.cart,
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
+})
 
-const mapStateToProps = state => ({
-    auth: state.auth,
-    errors: state.errors
-});
-
-export default connect(
-    mapStateToProps
-)(cart);
-
+export default connect(mapStateToProps, {getCart, deleteFromCart, checkout})(Cart);

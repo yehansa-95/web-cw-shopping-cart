@@ -12,6 +12,9 @@ const swaggerUi = require('swagger-ui-express')
 const swaggerFile = require('./swagger_output.json')
 const app = express();
 
+const cartRoutes = require('./routes/api/cart');
+const orderRoutes = require('./routes/api/order');
+
 
 app.use(
   bodyParser.urlencoded({
@@ -35,6 +38,8 @@ app.use('/uploads', express.static('uploads'));
 app.use("/api/users", users);
 app.use("/api/admin", admin);
 app.use("/api/items", item)
+app.use('/api',cartRoutes);
+app.use('/api',orderRoutes);
 
 const port = process.env.PORT || 5000;  
 

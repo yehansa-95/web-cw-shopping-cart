@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
+import { addToCart } from '../../../actions/cartActions';
+
 
 class Items extends Component {
 
@@ -48,7 +50,13 @@ class Items extends Component {
         console.log("OnPageChange", pageData);
     }
 
+    onAddToCart = async (id, productId) => {
+        await this.props.addToCart(id, productId, 1);
+        alert ('Item added to Cart');
+    }
+
     render() {
+        const user = this.props.user;
         return (
             <div>
                 <Navbar />
@@ -70,7 +78,7 @@ class Items extends Component {
                                         </Link>
                                             <button
                                             className="btn btn-success btn-sm  float-right" style={{ marginLeft: '15px' }}
-                                            // onClick={ }
+                                            onClick={this.onAddToCart.bind(this, user.id, value._id)}
                                             ><FontAwesomeIcon icon={faShoppingCart} />{" "}Add to Cart
                                             </button>
                                         </div>
@@ -88,13 +96,17 @@ class Items extends Component {
 
 Items.propTypes = {
     auth: PropTypes.object.isRequired,
+    addToCart: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    records: state.records
+    records: state.records,
+    user: state.auth.user
 });
 
 export default connect(
-    mapStateToProps
+    mapStateToProps, {addToCart}
 )(Items);
+
