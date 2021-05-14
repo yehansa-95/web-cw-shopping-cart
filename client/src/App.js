@@ -4,7 +4,7 @@ import SignUp from "./components/auth/SignUp/SignUp";
 import { Provider } from "react-redux";
 import store from "./store";
 import AdminSignIn from "./components/Admin/Auth/SignIn/AdminSignIn";
-import SignIn from "./components/auth/SignIn/SignIn";
+import SignIn from "./components/auth/signIn/SignIn";
 import AdminSignUp from "./components/Admin/Auth/SignUp/AdminSignUp";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utilities/setAuthToken";
