@@ -50,9 +50,13 @@ class AdminSignUp extends Component {
     }
 
     componentDidMount() { 
-        if (this.props.auth.isAuthenticated && this.props.auth.user.username != null) {
-            this.props.history.push("/dashboard");
-          }
+        if (this.props.auth.isAuthenticated) { 
+            if (this.props.auth.user.email != null){
+                this.props.history.push("/dashboard");
+            }else{
+                this.props.history.push("/view-items");
+            }
+        }
       }
 
     render() {
