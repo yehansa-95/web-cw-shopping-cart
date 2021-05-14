@@ -31,7 +31,8 @@ app.use(function (req, res, next) {
 });
 
 app.use(bodyParser.json());  
- 
+app.use(express.json);
+
 app.use(passport.initialize()); 
 
 app.use('/uploads', express.static('uploads'));
